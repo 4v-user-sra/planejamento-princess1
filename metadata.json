@@ -1,0 +1,8 @@
+{
+  "name": "Princess House - Planejamento Estratégico",
+  "description": "Planejamento Estratégico de Marketing & Vendas para a Princess House Buffet Infantil (V4 Company Nunes & CO).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
