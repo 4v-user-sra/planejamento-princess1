@@ -551,291 +551,258 @@ function RenderBlock({ slide }: { slide: any }) {
   }
 
 
-const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+const MetaAdsAuditCharts = ({ isLight, d }: { isLight: boolean; d: any }) => {
+  const [activeTab, setActiveTab] = useState<'linhas' | 'demografia' | 'oportunidade'>('linhas');
+  const [hoveredOffer, setHoveredOffer] = useState<number | null>(null);
 
-  const data = [
-    { mes: "Jan", pedidos: 36, cpa: 83.33, invest: "R$ 3.000,00", obs: "Férias escolares e planejamento antecipado das mães" },
-    { mes: "Fev", pedidos: 41, cpa: 73.17, invest: "R$ 3.000,00", obs: "Retomada escolar e crescimento nos orçamentos" },
-    { mes: "Mar", pedidos: 48, cpa: 62.50, invest: "R$ 3.000,00", obs: "Pico histórico (R$ 204.000 faturados / 39 festas Prime)" },
-    { mes: "Abr", pedidos: 40, cpa: 75.00, invest: "R$ 3.000,00", obs: "Estabilidade com foco em pacotes Prime e VIP" },
-    { mes: "Mai", pedidos: 46, cpa: 65.21, invest: "R$ 3.000,00", obs: "Mês das mães e datas comemorativas aquecidas" },
-    { mes: "Jun", pedidos: 23, cpa: 130.43, invest: "R$ 3.000,00", obs: "Início da desaceleração e falhas da agência anterior" },
-    { mes: "Jul", pedidos: 23, cpa: 130.43, invest: "R$ 3.000,00", obs: "Férias com baixa tração e criativos sem rotação" },
-    { mes: "Ago", pedidos: 43, cpa: 69.76, invest: "R$ 3.000,00", obs: "Recuperação puxada por indicações orgânicas (CAC zero)" },
-    { mes: "Set", pedidos: 33, cpa: 121.21, invest: "R$ 4.000,00", obs: "R$ 105.000 faturados (19 Primes, 7 VIPs, 5 Domicílio, 2 Estúdio)" },
-    { mes: "Out", pedidos: 28, cpa: 142.85, invest: "R$ 4.000,00", obs: "Pior mês do ano (~R$ 70k): atraso no WhatsApp e criativos desqualificados" }
+  const linhas = d?.linhas_oferta || [
+    { linha: "Festa dos Sonhos", conjuntos: 1, investido: "R$ 2.841,72", pct_verba: "15,9%", conversas: 550, custo_conversa: 5.17, cpm: "R$ 23,55", ctr: "1,29%", clique_para_conversa: "35,3%", status: "Parada" },
+    { linha: "Day Spa", conjuntos: 2, investido: "R$ 740,44", pct_verba: "4,1%", conversas: 141, custo_conversa: 5.25, cpm: "R$ 24,32", ctr: "1,63%", clique_para_conversa: "28,4%", status: "Parada" },
+    { linha: "Festa em Domicílio", conjuntos: 3, investido: "R$ 4.118,62", pct_verba: "23,1%", conversas: 639, custo_conversa: 6.45, cpm: "R$ 27,34", ctr: "1,50%", clique_para_conversa: "28,4%", status: "Parada" },
+    { linha: "Sazonais e Promoções", conjuntos: 7, investido: "R$ 1.356,12", pct_verba: "7,6%", conversas: 196, custo_conversa: 6.92, cpm: "R$ 26,18", ctr: "1,11%", clique_para_conversa: "34,1%", status: "Parada" },
+    { linha: "Festa Teens", conjuntos: 3, investido: "R$ 797,87", pct_verba: "4,5%", conversas: 89, custo_conversa: 8.96, cpm: "R$ 20,96", ctr: "0,75%", clique_para_conversa: "31,2%", status: "Parada" },
+    { linha: "Espaço Prime", conjuntos: 5, investido: "R$ 3.336,70", pct_verba: "18,7%", conversas: 343, custo_conversa: 9.73, cpm: "R$ 27,50", ctr: "1,17%", clique_para_conversa: "24,1%", status: "Ativa (R$ 11,91)" },
+    { linha: "Espaço VIP", conjuntos: 2, investido: "R$ 2.283,45", pct_verba: "12,8%", conversas: 233, custo_conversa: 9.80, cpm: "R$ 35,99", ctr: "1,15%", clique_para_conversa: "31,8%", status: "Ativa (R$ 8,77)" },
+    { linha: "Espaço Studio", conjuntos: 4, investido: "R$ 2.374,74", pct_verba: "13,3%", conversas: 231, custo_conversa: 10.28, cpm: "R$ 30,84", ctr: "1,10%", clique_para_conversa: "27,4%", status: "Parada" }
   ];
 
-  const maxPedidos = 60;
-  const maxCpa = 160;
-  const cpaMedia = 85.00;
+  const idades = d?.idade_distribuicao || [
+    { faixa: "18-24", msg: 0.4, clique: 2.5, conversas: 13, custo: "R$ 2,46" },
+    { faixa: "25-34", msg: 32.1, clique: 18.7, conversas: 589, custo: "R$ 6,67" },
+    { faixa: "35-44", msg: 46.7, clique: 18.5, conversas: 1171, custo: "R$ 7,74" },
+    { faixa: "45-54", msg: 15.7, clique: 17.4, conversas: 539, custo: "R$ 7,64" },
+    { faixa: "55-64", msg: 1.7, clique: 20.2, conversas: 61, custo: "R$ 7,60" },
+    { faixa: "65+", msg: 0.9, clique: 22.8, conversas: 45, custo: "R$ 4,92" }
+  ];
 
-  const svgWidth = 860;
-  const svgHeight = 280;
-  const paddingLeft = 55;
-  const paddingRight = 65;
-  const paddingTop = 35;
-  const paddingBottom = 45;
-
-  const plotWidth = svgWidth - paddingLeft - paddingRight;
-  const plotHeight = svgHeight - paddingTop - paddingBottom;
-
-  const getX = (index: number) => paddingLeft + (index + 0.5) * (plotWidth / data.length);
-  const getYPedidos = (val: number) => paddingTop + plotHeight - (val / maxPedidos) * plotHeight;
-  const getYCpa = (val: number) => paddingTop + plotHeight - (val / maxCpa) * plotHeight;
-
-  const yCpaMedia = getYCpa(cpaMedia);
-
-  const linePoints = data.map((d, i) => `${getX(i)},${getYCpa(d.cpa)}`).join(" ");
+  const maxCusto = 12.0;
+  const mediaConta = 7.37;
 
   return (
-    <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl`}>
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 border-b pb-4 border-zinc-200 dark:border-zinc-800">
+    <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl flex flex-col gap-6`}>
+      {/* Header with Title & Tab Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4 border-zinc-200 dark:border-zinc-800">
         <div>
           <div className="flex items-center gap-2">
             <BarChart2 className="w-5 h-5 text-red-600" />
             <h3 className={`text-lg font-bold ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
-              Histórico Mensal de Vendas & Desempenho (2026)
+              Auditoria Meta Ads: Custo por Conversa por Linha de Oferta & Demografia
             </h3>
           </div>
           <p className={`text-xs mt-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
-            Evolução de festas comercializadas vs. custo de aquisição (CAC de mídia) — sazonalidade e queda recente
+            Acumulado Jan-Out/2026 (R$ 23.337 investidos • 2.422 conversas a R$ 7,37 de média)
           </p>
         </div>
 
-        {/* Legend */}
-        <div className="flex flex-wrap items-center gap-5 text-xs font-semibold">
-          <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded bg-red-600 shadow-sm" />
-            <span className={isLight ? 'text-zinc-700' : 'text-zinc-300'}>Festas Fechadas (Barras)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-amber-500 rounded-full" />
-            <div className="w-2.5 h-2.5 rounded-full bg-amber-500 -ml-3.5" />
-            <span className={isLight ? 'text-zinc-700' : 'text-zinc-300'}>CPA/CAC em R$ (Linha)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-0.5 border-b-2 border-dashed border-emerald-500" />
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">Média: ~36 festas/mês</span>
-          </div>
-        </div>
-      </div>
-
-      {/* SVG Chart */}
-      <div className="relative w-full overflow-x-auto">
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full h-auto min-w-[650px] font-sans">
-          {/* Grid lines */}
-          {[0, 15, 30, 45, 60].map((val) => {
-            const y = getYPedidos(val);
-            return (
-              <g key={val}>
-                <line
-                  x1={paddingLeft}
-                  y1={y}
-                  x2={svgWidth - paddingRight}
-                  y2={y}
-                  stroke={isLight ? '#f1f5f9' : '#27272a'}
-                  strokeWidth="1"
-                />
-                {/* Left Y-axis label (Festas) */}
-                <text
-                  x={paddingLeft - 10}
-                  y={y + 4}
-                  textAnchor="end"
-                  fontSize="10"
-                  fill={isLight ? '#94a3b8' : '#71717a'}
-                  fontWeight="600"
-                >
-                  {val}
-                </text>
-              </g>
-            );
-          })}
-
-          {/* Right Y-axis labels (CPA) */}
-          {[0, 40, 80, 120, 160].map((val) => {
-            const y = getYCpa(val);
-            return (
-              <text
-                key={val}
-                x={svgWidth - paddingRight + 10}
-                y={y + 4}
-                textAnchor="start"
-                fontSize="10"
-                fill="#f59e0b"
-                fontWeight="700"
-              >
-                R${val}
-              </text>
-            );
-          })}
-
-          {/* Reference Line for Average CPA */}
-          <line
-            x1={paddingLeft}
-            y1={yCpaMedia}
-            x2={svgWidth - paddingRight}
-            y2={yCpaMedia}
-            stroke="#10b981"
-            strokeWidth="1.5"
-            strokeDasharray="4 4"
-          />
-          <text
-            x={svgWidth - paddingRight - 8}
-            y={yCpaMedia - 6}
-            textAnchor="end"
-            fontSize="10"
-            fill="#10b981"
-            fontWeight="bold"
+        {/* Tab Buttons */}
+        <div className="flex rounded-xl p-1 bg-zinc-100 dark:bg-zinc-800 text-xs font-bold">
+          <button
+            onClick={() => setActiveTab('linhas')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'linhas' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
           >
-            Média: ~R$85/festa
-          </text>
-
-          {/* Bars for Festas */}
-          {data.map((d, i) => {
-            const x = getX(i);
-            const barWidth = 36;
-            const barHeight = (d.pedidos / maxPedidos) * plotHeight;
-            const y = getYPedidos(d.pedidos);
-            const isHovered = hoveredIdx === i;
-
-            return (
-              <g
-                key={i}
-                className="cursor-pointer transition-all duration-200"
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
-              >
-                {/* Bar */}
-                <rect
-                  x={x - barWidth / 2}
-                  y={y}
-                  width={barWidth}
-                  height={barHeight}
-                  rx="6"
-                  fill={d.pedidos <= 25 ? '#f43f5e' : (d.pedidos >= 45 ? '#10b981' : '#dc2626')}
-                  opacity={isHovered ? 1 : 0.85}
-                  className="transition-opacity duration-200"
-                />
-                
-                {/* Pedidos value label on top of bar */}
-                <text
-                  x={x}
-                  y={y - 6}
-                  textAnchor="middle"
-                  fontSize="11"
-                  fontWeight="bold"
-                  fill={isLight ? '#1e293b' : '#f8fafc'}
-                >
-                  {d.pedidos}
-                </text>
-
-                {/* X-axis label (Mês) */}
-                <text
-                  x={x}
-                  y={svgHeight - 15}
-                  textAnchor="middle"
-                  fontSize="12"
-                  fontWeight={isHovered ? 'bold' : '600'}
-                  fill={isHovered ? '#dc2626' : isLight ? '#475569' : '#a1a1aa'}
-                >
-                  {d.mes}
-                </text>
-              </g>
-            );
-          })}
-
-          {/* CPA Line Path */}
-          <polyline
-            fill="none"
-            stroke="#f59e0b"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            points={linePoints}
-          />
-
-          {/* CPA Dots & Badges */}
-          {data.map((d, i) => {
-            const x = getX(i);
-            const y = getYCpa(d.cpa);
-            const isHovered = hoveredIdx === i;
-
-            return (
-              <g
-                key={i}
-                className="cursor-pointer"
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
-              >
-                {/* Outer halo */}
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={isHovered ? 8 : 5}
-                  fill="#f59e0b"
-                  stroke={isLight ? '#ffffff' : '#18181b'}
-                  strokeWidth="2.5"
-                  className="transition-all duration-200 shadow-md"
-                />
-
-                {/* CPA Pill/Label */}
-                <g transform={`translate(${x}, ${y + (i % 2 === 0 ? -14 : 18)})`}>
-                  <rect
-                    x="-24"
-                    y="-9"
-                    width="48"
-                    height="17"
-                    rx="8"
-                    fill={isLight ? '#fffbeb' : '#451a03'}
-                    stroke="#f59e0b"
-                    strokeWidth="1"
-                    className="shadow-sm"
-                  />
-                  <text
-                    x="0"
-                    y="3"
-                    textAnchor="middle"
-                    fontSize="9.5"
-                    fontWeight="800"
-                    fill={isLight ? '#b45309' : '#fbbf24'}
-                  >
-                    R${d.cpa.toFixed(0)}
-                  </text>
-                </g>
-              </g>
-            );
-          })}
-        </svg>
+            Linhas de Oferta (R$/conversa)
+          </button>
+          <button
+            onClick={() => setActiveTab('demografia')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'demografia' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
+          >
+            Idade & Gênero (Desvio 55+)
+          </button>
+          <button
+            onClick={() => setActiveTab('oportunidade')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'oportunidade' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
+          >
+            Tamanho da Oportunidade
+          </button>
+        </div>
       </div>
 
-      {/* Dynamic Hover Details or Default Callouts */}
-      {hoveredIdx !== null ? (
-        <div className={`mt-4 p-4 rounded-xl border transition-all ${isLight ? 'bg-red-50/80 border-red-200' : 'bg-red-950/30 border-red-900/50'} flex items-center justify-between gap-4`}>
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-black text-red-600">{data[hoveredIdx].mes} 2026</span>
-            <span className={`text-sm ${isLight ? 'text-zinc-600' : 'text-zinc-300'}`}>• {data[hoveredIdx].obs}</span>
+      {/* Tab 1: Linhas de Oferta Horizontal Bar Chart */}
+      {activeTab === 'linhas' && (
+        <div className="flex flex-col gap-4">
+          <div className="flex justify-between items-center text-xs font-semibold px-2">
+            <span className="text-zinc-500">Linha de Oferta</span>
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Abaixo da média (&lt; R$ 7,37)
+              </span>
+              <span className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500" /> Acima da média (&gt; R$ 7,37)
+              </span>
+              <span className="text-zinc-400 font-mono">Média da Conta: R$ 7,37</span>
+            </div>
           </div>
-          <div className="flex items-center gap-6 text-sm font-bold">
-            <div>Festas Fechadas: <span className="text-red-600">{data[hoveredIdx].pedidos}</span></div>
-            <div>Investimento em Mídia: <span className="text-indigo-600">{data[hoveredIdx].invest}</span></div>
-            <div>CPA de Mídia: <span className="text-amber-600">R$ {data[hoveredIdx].cpa.toFixed(2).replace('.', ',')}</span></div>
+
+          <div className="space-y-3">
+            {linhas.map((item: any, idx: number) => {
+              const isBelowAvg = item.custo_conversa < mediaConta;
+              const barWidth = `${(item.custo_conversa / maxCusto) * 100}%`;
+              const isHovered = hoveredOffer === idx;
+
+              return (
+                <div
+                  key={idx}
+                  className={`p-3 rounded-xl border transition-all cursor-pointer ${isHovered ? (isLight ? 'bg-zinc-50 border-zinc-300 shadow-md' : 'bg-zinc-800/80 border-zinc-700 shadow-lg') : (isLight ? 'bg-white border-zinc-100' : 'bg-zinc-900/60 border-zinc-800/80')}`}
+                  onMouseEnter={() => setHoveredOffer(idx)}
+                  onMouseLeave={() => setHoveredOffer(null)}
+                >
+                  <div className="flex items-center justify-between text-xs mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className={`font-bold text-sm ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                        {item.linha}
+                      </span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${item.status.includes('Ativa') ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4 text-xs">
+                      <span className="text-zinc-500"><strong>{item.conversas}</strong> conversas ({item.pct_verba} verba)</span>
+                      <span className="text-zinc-500">CPM {item.cpm}</span>
+                      <span className={`text-sm font-black font-mono ${isBelowAvg ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                        R$ {item.custo_conversa.toFixed(2).replace('.', ',')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Horizontal Bar with Benchmark Line */}
+                  <div className="relative w-full h-4 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${isBelowAvg ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-gradient-to-r from-rose-400 to-rose-600'}`}
+                      style={{ width: barWidth }}
+                    />
+                    {/* Media line reference marker at 61.4% (7.37/12) */}
+                    <div
+                      className="absolute top-0 bottom-0 w-0.5 bg-zinc-900 dark:bg-white z-10"
+                      style={{ left: `${(mediaConta / maxCusto) * 100}%` }}
+                      title="Média Geral: R$ 7,37"
+                    />
+                  </div>
+
+                  {isHovered && (
+                    <div className="mt-2.5 pt-2 border-t border-zinc-200 dark:border-zinc-800 flex justify-between text-[11px] text-zinc-500">
+                      <span>Investimento total: <strong>{item.investido}</strong> em {item.conjuntos} conjunto(s)</span>
+                      <span>CTR no link: <strong>{item.ctr}</strong></span>
+                      <span>Taxa de clique p/ conversa: <strong>{item.clique_para_conversa}</strong></span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-2 p-3 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <strong>Distorção Crítica de Campanhas Ativas:</strong> As duas linhas ativas na exportação estão custando muito acima da média (Festa Prime a R$ 11,91 e Espaço VIP a R$ 8,77), enquanto a <strong>Festa dos Sonhos</strong> — a mais barata e de maior conversão (R$ 5,17/conversa e 35,3% de taxa de chat) — estava parada.
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="mt-4 grid md:grid-cols-2 gap-3 text-xs leading-relaxed">
-          <div className={`p-3 rounded-xl border ${isLight ? 'bg-emerald-50/80 border-emerald-200 text-emerald-900' : 'bg-emerald-950/20 border-emerald-900/40 text-emerald-300'} flex items-start gap-2.5`}>
-            <TrendingUp className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-            <div>
-              <strong>Março (Pico de 48 festas e R$ 204.000):</strong> Melhor mês histórico. Após o término dos gastos de início de ano (IPVA, material e matrículas), as mães antecipam o fechamento do calendário de aniversários.
+      )}
+
+      {/* Tab 2: Idade & Gênero */}
+      {activeTab === 'demografia' && (
+        <div className="flex flex-col gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Mensagem vs Clique por Idade */}
+            <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'}`}>
+              <h4 className={`text-sm font-bold mb-3 flex items-center justify-between ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                <span>Participação nas Impressões por Idade</span>
+                <span className="text-[11px] font-normal text-zinc-500">Mensagens vs. Cliques</span>
+              </h4>
+
+              <div className="space-y-3">
+                {idades.map((item: any, idx: number) => (
+                  <div key={idx} className="space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="font-bold">{item.faixa} anos</span>
+                      <span className="text-zinc-500">{item.conversas} conversas ({item.custo}/conversa)</span>
+                    </div>
+                    {/* Double bar: Red for Mensagens, Blue for Cliques */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] w-12 text-rose-600 font-semibold">Msg: {item.msg}%</span>
+                        <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                          <div className="h-full bg-rose-600 rounded-full" style={{ width: `${item.msg * 2}%` }} />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] w-12 text-indigo-600 font-semibold">Cliq: {item.clique}%</span>
+                        <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                          <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${item.clique * 2}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Gênero e Diagnóstico de Desvio */}
+            <div className="flex flex-col justify-between gap-4">
+              <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'}`}>
+                <h4 className={`text-sm font-bold mb-2 ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                  Divisão de Gênero em Mensagens
+                </h4>
+                <div className="space-y-3 text-xs">
+                  <div className="flex justify-between items-center p-2 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/40">
+                    <div>
+                      <span className="font-bold text-rose-700 dark:text-rose-400 block">Mulheres (97,3% da verba)</span>
+                      <span className="text-zinc-500">2.369 conversas geradas</span>
+                    </div>
+                    <span className="text-base font-black text-rose-600">R$ 7,33 /conversa</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                    <div>
+                      <span className="font-bold text-zinc-700 dark:text-zinc-300 block">Homens (2,4% da verba)</span>
+                      <span className="text-zinc-500">43 conversas geradas</span>
+                    </div>
+                    <span className="text-base font-black text-zinc-600">R$ 9,84 /conversa (+34%)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Finding Box on Click Leakage */}
+              <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-xs text-red-900 dark:text-red-300 leading-relaxed">
+                <strong>Vazamento em Cliques no Link:</strong> 23,3% da verba foi gasta em campanhas de clique a R$ 0,15, porém <strong>42,9% das impressões foram entregues para pessoas com 55 anos ou mais</strong> (nas campanhas de mensagem, 55+ representou apenas 2,7%). Tráfego barato, mas fora do perfil comprador de festas infantis.
+              </div>
             </div>
           </div>
-          <div className={`p-3 rounded-xl border ${isLight ? 'bg-rose-50/80 border-rose-200 text-rose-900' : 'bg-rose-950/20 border-rose-900/40 text-rose-300'} flex items-start gap-2.5`}>
-            <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-            <div>
-              <strong>Outubro (Pior mês - 28 festas e ~R$ 70k):</strong> Gargalo comercial crítico com demora no retorno aos fins de semana e campanhas de anúncios estáticas gerando contatos frios fora do nicho.
+        </div>
+      )}
+
+      {/* Tab 3: Tamanho da Oportunidade & Prioridades */}
+      {activeTab === 'oportunidade' && (
+        <div className="flex flex-col gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
+              <span className="text-xs text-zinc-500 block uppercase">Conjuntos com Custo &gt; R$ 11</span>
+              <span className="text-3xl font-black text-rose-600 mt-1 block">7 conjuntos</span>
+              <span className="text-xs text-zinc-400">Somaram R$ 4.663 investidos</span>
             </div>
+            <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
+              <span className="text-xs text-zinc-500 block uppercase">Conversas Geradas neles</span>
+              <span className="text-3xl font-black text-amber-500 mt-1 block">377 conversas</span>
+              <span className="text-xs text-zinc-400">Custo médio elevado (&gt; R$ 12,30)</span>
+            </div>
+            <div className={`p-4 rounded-xl border ${isLight ? 'bg-emerald-50 border-emerald-200' : 'bg-emerald-950/30 border-emerald-900/50'} text-center`}>
+              <span className="text-xs text-emerald-700 dark:text-emerald-400 block uppercase font-bold">Potencial a R$ 7,00/conversa</span>
+              <span className="text-3xl font-black text-emerald-600 mt-1 block">+289 conversas</span>
+              <span className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">+11,9% de volume sobre a conta inteira</span>
+            </div>
+          </div>
+
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/60 border-zinc-800'} text-xs space-y-2`}>
+            <div className="font-bold text-sm text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              Direcionamentos Imediatos de Otimização (Plano de Ação Meta Ads):
+            </div>
+            <ol className="list-decimal pl-5 space-y-1.5 text-zinc-600 dark:text-zinc-300">
+              <li><strong>Ligar conversa a venda:</strong> marcar a campanha de origem no CRM para decidir cortes por ROAS e ticket, e não apenas pelo custo da conversa.</li>
+              <li><strong>Revisar Prime e VIP ativas:</strong> Festa Prime só converte 18,6% dos cliques em chat (trocar promessa/criativo antes de escalar verba).</li>
+              <li><strong>Religar o que já provou resultado:</strong> reativar Festa dos Sonhos (R$ 5,17) e a versão de setembro de Domicílio (R$ 4,83).</li>
+              <li><strong>Consolidar por linha de oferta:</strong> acabar com as 33 campanhas pulverizadas; ter 1 campanha contínua por linha com 3 a 4 criativos por conjunto.</li>
+              <li><strong>Restringir campanhas de tráfego/clique:</strong> limitar a mulheres de 25 a 54 anos para eliminar o desperdício com público 55+.</li>
+            </ol>
           </div>
         </div>
       )}
@@ -860,11 +827,16 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
         
         <div className="min-w-[920px] w-full flex flex-col items-center relative">
           {/* Top Node */}
-          <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-2 border-zinc-700 text-white font-extrabold px-10 py-4 rounded-2xl flex items-center gap-3 shadow-2xl z-10">
-            <DollarSign className="w-6 h-6 text-emerald-400" />
+          {/* Top Node: Strategic Budget */}
+          <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-2 border-zinc-700 text-white font-extrabold px-10 py-4 rounded-2xl flex items-center gap-4 shadow-2xl z-10">
+            <DollarSign className="w-7 h-7 text-emerald-400 shrink-0" />
             <div className="flex flex-col text-left">
-              <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">Orçamento Total Mensal</span>
-              <span className="text-2xl text-emerald-400 font-black">R$ 3.000 a R$ 4.000 / mês</span>
+              <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">Orçamento Estratégico Meta Ads</span>
+              <span className="text-2xl text-emerald-400 font-black">{d.orcamento_total || "R$ 3.000 a R$ 4.000 / mês"}</span>
+            </div>
+            <div className="hidden sm:flex border-l border-zinc-700 pl-4 flex-col text-left text-[11px] text-zinc-400">
+              <span className="text-zinc-300 font-bold">Consolidação em 3 Linhas</span>
+              <span>Estrutura contínua sem fragmentação</span>
             </div>
           </div>
 
@@ -872,10 +844,10 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
           <div className={`h-10 w-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'}`} />
           
           {/* Horizontal span line covering all 3 branches */}
-          <div className={`w-[85%] h-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'}`} />
+          <div className={`w-[88%] h-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'}`} />
           
           {/* 3 Dropdown lines */}
-          <div className="flex w-[85%] justify-between">
+          <div className="flex w-[88%] justify-between">
             <div className={`h-10 w-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'} relative`}>
               <ChevronRight className={`absolute -bottom-2 -left-2.5 w-5 h-5 ${isLight ? 'text-zinc-400' : 'text-zinc-500'} rotate-90`} />
             </div>
@@ -887,114 +859,196 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
             </div>
           </div>
 
-          {/* 3 Campaign Branch Nodes */}
-          <div className="flex w-full justify-between gap-6 px-4 mt-2 z-10">
+          {/* 3 Campaign Branch Nodes (Lines from PDF) */}
+          <div className="flex w-full justify-between gap-5 px-2 mt-2 z-10">
             
-            {/* Branch 1: Meta Ads (65%) */}
-            <div className={`flex-[1.2] ${cardBg} p-6 rounded-2xl text-left shadow-xl border-2 border-emerald-500/60 relative flex flex-col justify-between overflow-hidden`}>
+            {/* Branch 1: Linhas Contínuas por Oferta (70%) */}
+            <div className={`flex-[1.25] ${cardBg} p-5 rounded-2xl text-left shadow-xl border-2 border-emerald-500/60 relative flex flex-col justify-between overflow-hidden`}>
               <div className="absolute top-0 right-0 bg-emerald-500 text-white font-black text-xs px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                65% da Verba
+                70% da Verba
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Motor de Encantamento</span>
+                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Motor Contínuo de Mensagens</span>
                 </div>
-                <h4 className={`font-black text-xl mb-1 ${titleColor}`}>Meta Ads (Reels & Stories)</h4>
-                <p className="text-2xl font-black text-emerald-600 mb-3">R$ 2.000 a R$ 2.600 <span className="text-xs font-semibold text-zinc-500">/mês</span></p>
-                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-1.5`}>
-                  <p><strong>Público:</strong> Mães de 30 a 42 anos no raio de até 25 km (Tatuapé, Mooca, Anália Franco, Guarulhos)</p>
-                  <p className="text-emerald-700 dark:text-emerald-400 font-medium">⚡ Vídeos imersivos de spa, passarela e campanha Black Friday Prime com Limousine</p>
+                <h4 className={`font-black text-lg mb-1 ${titleColor}`}>Campanhas por Linha de Oferta</h4>
+                <p className="text-2xl font-black text-emerald-600 mb-3">R$ 2.100 a R$ 2.800 <span className="text-xs font-semibold text-zinc-500">/mês</span></p>
+                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-2`}>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span><strong>Reativação das Campeãs:</strong> Festa dos Sonhos (CPA R$ 5,17) e Domicílio (CPA R$ 4,83 / R$ 6,45).</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span><strong>Novos Vídeos Prime & VIP:</strong> Testar 3-4 criativos por conjunto para baixar CPA de R$ 9,73 - R$ 11,91.</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span><strong>1 Campanha Contínua por Linha:</strong> Elimina pausamentos que reiniciam o aprendizado do algoritmo.</span>
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Branch 2: Google Ads (25%) */}
-            <div className={`flex-[1] ${cardBg} p-6 rounded-2xl text-left shadow-xl border-2 border-indigo-500/60 relative flex flex-col justify-between overflow-hidden`}>
+            {/* Branch 2: Tráfego Restrito Mulheres 25-54 anos (20%) */}
+            <div className={`flex-[1] ${cardBg} p-5 rounded-2xl text-left shadow-xl border-2 border-indigo-500/60 relative flex flex-col justify-between overflow-hidden`}>
               <div className="absolute top-0 right-0 bg-indigo-500 text-white font-black text-xs px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                25% da Verba
+                20% da Verba
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
-                  <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Busca de Alta Intenção</span>
+                  <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Anti-Vazamento Demográfico</span>
                 </div>
-                <h4 className={`font-black text-xl mb-1 ${titleColor}`}>Google Ads & Maps</h4>
-                <p className="text-2xl font-black text-indigo-600 mb-3">R$ 750 a R$ 1.000 <span className="text-xs font-semibold text-zinc-500">/mês</span></p>
-                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-1.5`}>
-                  <p><strong>Público:</strong> Busca ativa ('buffet spa infantil tatuapé', 'festa de princesa sp')</p>
-                  <p className="text-indigo-700 dark:text-indigo-400 font-medium">🎯 Redirecionamento para Landing Page com formulário de triagem rápida</p>
+                <h4 className={`font-black text-lg mb-1 ${titleColor}`}>Tráfego Restrito Mulheres 25-54a</h4>
+                <p className="text-2xl font-black text-indigo-600 mb-3">R$ 600 a R$ 800 <span className="text-xs font-semibold text-zinc-500">/mês</span></p>
+                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-2`}>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-indigo-500 font-bold">✓</span>
+                    <span><strong>Fim do Desvio 55+:</strong> Trava no público que concentrou 42,9% de cliques sem gerar conversas (2,7%).</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-indigo-500 font-bold">✓</span>
+                    <span><strong>Foco nas Decisoras:</strong> Mulheres de 25-44/54 anos representam 78,8% das conversas e CPA de R$ 7,33.</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-indigo-500 font-bold">✓</span>
+                    <span><strong>Destino de Conversão:</strong> Tráfego direto para Landing Page com triagem e WhatsApp imediato.</span>
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Branch 3: Remarketing & Base Histórica (10%) */}
-            <div className={`flex-[0.9] ${cardBg} p-6 rounded-2xl text-left shadow-xl border-2 border-amber-500/60 relative flex flex-col justify-between overflow-hidden`}>
+            {/* Branch 3: Remarketing Estruturado & Volume (10%) */}
+            <div className={`flex-[0.95] ${cardBg} p-5 rounded-2xl text-left shadow-xl border-2 border-amber-500/60 relative flex flex-col justify-between overflow-hidden`}>
               <div className="absolute top-0 right-0 bg-amber-500 text-white font-black text-xs px-3 py-1 rounded-bl-xl uppercase tracking-wider">
                 10% da Verba
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">CAC Zero & Retenção</span>
+                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Volume Crítico & Retenção</span>
                 </div>
-                <h4 className={`font-black text-xl mb-1 ${titleColor}`}>Remarketing & Base 4k</h4>
+                <h4 className={`font-black text-lg mb-1 ${titleColor}`}>Remarketing & Testes com Volume</h4>
                 <p className="text-2xl font-black text-amber-600 mb-3">R$ 300 a R$ 400 <span className="text-xs font-semibold text-zinc-500">/mês</span></p>
-                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-1.5`}>
-                  <p><strong>Público:</strong> Visitantes recentes e 4.000 contatos da base</p>
-                  <p className="text-amber-700 dark:text-amber-400 font-medium">✨ Agradecimento D+1 para converter convidadas e ofertas VIP</p>
+                <div className={`text-xs ${isLight ? 'text-zinc-600' : 'text-zinc-300'} space-y-2`}>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span><strong>Frio vs. Remarketing:</strong> Separação clara de públicos com verba para ultrapassar 50 conversas/conjunto.</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span><strong>Ativação da Base 4k:</strong> Reengajamento contínuo de clientes antigas e visitantes de perfil/site.</span>
+                  </p>
+                  <p className="flex items-start gap-1.5">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span><strong>Prova Social & Propostas VIP:</strong> Criativos com reações espontâneas de aniversariantes e mães.</span>
+                  </p>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* Convergence Paths (Lines from Branch 1, 2 & 3 to Center) */}
+          {/* Convergence Paths (Lines from Branch 1, 2 & 3 to Triagem Central Node) */}
           <div className="flex w-full justify-between px-4 mt-0">
             <div className="flex-[3] flex flex-col items-center relative pt-6">
-              <div className="flex w-[80%] justify-between absolute top-0">
-                <div className={`h-8 w-px ${isLight ? 'bg-emerald-500' : 'bg-emerald-500'}`} />
-                <div className={`h-8 w-px ${isLight ? 'bg-indigo-500' : 'bg-indigo-500'}`} />
-                <div className={`h-8 w-px ${isLight ? 'bg-amber-500' : 'bg-amber-500'}`} />
+              <div className="flex w-[82%] justify-between absolute top-0">
+                <div className={`h-8 w-px bg-emerald-500`} />
+                <div className={`h-8 w-px bg-indigo-500`} />
+                <div className={`h-8 w-px bg-amber-500`} />
               </div>
-              <div className={`w-[80%] h-0.5 bg-gradient-to-r from-emerald-500 via-indigo-500 to-amber-500 mt-8`} />
+              <div className={`w-[82%] h-0.5 bg-gradient-to-r from-emerald-500 via-indigo-500 to-amber-500 mt-8`} />
               <div className={`h-8 w-px bg-red-600 relative`}>
                 <ChevronRight className="absolute -bottom-2 -left-2.5 w-5 h-5 text-red-600 rotate-90" />
               </div>
               
-              {/* Umbler IA + WhatsApp Central Node */}
-              <div className="bg-gradient-to-r from-red-600 to-rose-700 text-white font-bold p-6 rounded-2xl shadow-2xl shadow-red-900/30 flex items-center justify-between gap-6 mt-2 z-10 w-full max-w-2xl">
+              {/* Etapa 2: Triagem Umbler IA (< 2 min) + WhatsApp Central Node */}
+              <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white font-bold p-6 rounded-2xl shadow-2xl shadow-red-900/30 flex flex-col md:flex-row items-center justify-between gap-6 mt-2 z-10 w-full max-w-3xl border border-red-400/40">
                 <div className="flex items-center gap-4">
-                  <div className="p-3.5 bg-white/10 rounded-xl">
+                  <div className="p-3.5 bg-white/10 rounded-xl shrink-0">
                     <Rocket className="w-8 h-8 text-white" />
                   </div>
-                  <div>
-                    <span className="text-2xl font-black block">Triagem Umbler IA (&lt; 2 min) + WhatsApp</span>
-                    <span className="text-sm font-normal text-red-100">Qualificação automática (nome, data, idade, pacote) + Tour em vídeo ao vivo com Juliana & Simoni</span>
+                  <div className="text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full font-bold">Etapa 2: Triagem Imediata</span>
+                      <span className="text-xs text-red-200">Tempo de Resposta &lt; 2 min</span>
+                    </div>
+                    <span className="text-2xl font-black block">Triagem Umbler IA + WhatsApp Integrado</span>
+                    <span className="text-sm font-normal text-red-100 block mt-1">
+                      Qualificação automática 24/7 (Nome da aniversariante, idade, data estimada, convidadas e pacote de interesse).
+                    </span>
+                    <span className="text-xs text-amber-200 font-semibold block mt-1">
+                      🏷️ Tag de Origem da Campanha anexada ao Lead para rastreamento no CRM
+                    </span>
                   </div>
                 </div>
-                <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl text-right shrink-0">
+                <div className="bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-xl text-center md:text-right shrink-0">
                   <span className="text-xs uppercase block text-red-100 font-bold">Meta Mensal</span>
-                  <span className="text-lg font-black">60 a 80 Festas</span>
+                  <span className="text-xl font-black">60 a 80 Festas</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Connector from Central Node to CRM Retenção */}
-          <div className="w-full relative h-12 flex justify-center">
-            <div className={`h-12 w-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'} relative`}>
+          {/* Connector from Triagem to Comercial Consultivo */}
+          <div className="w-full relative h-10 flex justify-center">
+            <div className={`h-10 w-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'} relative`}>
               <ChevronRight className={`absolute -bottom-2 -left-2.5 w-5 h-5 ${isLight ? 'text-zinc-400' : 'text-zinc-500'} rotate-90`} />
             </div>
           </div>
 
-          {/* Final CRM node */}
-          <div className="flex w-full flex-col items-center mt-2 relative z-10">
-            <div className={`${isLight ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : 'bg-emerald-950/40 border-emerald-500/50 text-emerald-400'} border-2 px-10 py-5 rounded-2xl flex items-center gap-4 shadow-xl max-w-xl w-full justify-center`}>
-              <RefreshCw className="w-6 h-6 text-emerald-500 animate-spin-slow shrink-0" />
-              <div className="text-left">
-                <span className="text-lg font-black block">Contratos Fechados, Pós-Venda & Retenção LTV</span>
-                <span className={`text-xs ${isLight ? 'text-emerald-700' : 'text-emerald-300'}`}>Festa Prime, VIP, Estúdio e Domicílio • Brinde Boneca Princess • Agradecimento D+1 e expansão de franquias</span>
+          {/* Etapa 3: Apresentação Comercial Consultiva (Juliana & Simoni) */}
+          <div className="flex w-full flex-col items-center relative z-10">
+            <div className={`${cardBg} border-2 border-indigo-500/50 p-5 rounded-2xl flex items-center justify-between gap-6 shadow-xl max-w-3xl w-full`}>
+              <div className="flex items-center gap-4 text-left">
+                <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-xl shrink-0">
+                  <Video className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[11px] uppercase tracking-wider bg-indigo-500/10 text-indigo-500 px-2 py-0.5 rounded font-bold">Etapa 3: Comercial Consultivo</span>
+                    <span className={`text-xs ${subtitleColor}`}>Sócias Juliana & Simoni</span>
+                  </div>
+                  <span className={`text-lg font-black block ${titleColor}`}>Tour em Vídeo ao Vivo & Apresentação de Pacotes</span>
+                  <span className={`text-xs ${subtitleColor}`}>
+                    Demonstração imersiva do espaço, passarela, limousine, robô dançarino e boneca Princess • Proposta rápida e flexibilidade (Pix com desconto ou link sem juros).
+                  </span>
+                </div>
+              </div>
+              <div className="hidden sm:flex flex-col text-right shrink-0">
+                <span className="text-xs font-bold text-indigo-500">Agilidade Máxima</span>
+                <span className="text-[11px] text-zinc-400">Sem burocracia</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Connector from Comercial to CRM & Retenção */}
+          <div className="w-full relative h-10 flex justify-center">
+            <div className={`h-10 w-px ${isLight ? 'bg-zinc-300' : 'bg-zinc-700'} relative`}>
+              <ChevronRight className={`absolute -bottom-2 -left-2.5 w-5 h-5 ${isLight ? 'text-zinc-400' : 'text-zinc-500'} rotate-90`} />
+            </div>
+          </div>
+
+          {/* Etapa 4: Fechamento, Rastreamento CRM (Ação #1 do PDF) & Retenção */}
+          <div className="flex w-full flex-col items-center relative z-10">
+            <div className={`${isLight ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'} border-2 px-8 py-5 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5 shadow-xl max-w-3xl w-full text-left`}>
+              <div className="flex items-center gap-4">
+                <RefreshCw className="w-7 h-7 text-emerald-500 shrink-0 animate-spin-slow" />
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[11px] uppercase tracking-wider bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded font-bold">Etapa 4: Fundo de Funil & LTV</span>
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">🎯 Ação Mais Urgente da Auditoria</span>
+                  </div>
+                  <span className="text-lg font-black block">Fechamento, Rastreamento CRM & Retenção</span>
+                  <span className="text-xs leading-relaxed block mt-1">
+                    <strong>Cruzamento Conversas x Vendas:</strong> Ligar as 2.422+ conversas geradas aos contratos fechados para apurar o ROAS real e ticket médio por oferta (Prime, VIP, Sonhos, Domicílio).
+                  </span>
+                  <span className="text-xs leading-relaxed block mt-1 text-emerald-700 dark:text-emerald-300">
+                    <strong>Pós-Venda D+1 (CAC Zero):</strong> Agradecimento e ativação imediata de mães convidadas da festa para novos aniversários.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -1007,31 +1061,39 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
   if (type === 'meta_ads_analysis') {
     return (
       <div className="flex flex-col h-full gap-8">
-        <h2 className={`text-4xl font-bold ${titleColor} mb-2`}>{d.titulo}</h2>
+        <div>
+          <h2 className={`text-4xl font-bold ${titleColor} mb-2`}>{d.titulo}</h2>
+          <p className={`text-base ${subtitleColor}`}>{d.subtitulo_periodo || "Auditoria oficial do Gerenciador de Anúncios • Acumulado 01/01 a 31/10/2026"}</p>
+        </div>
         
-        {/* Top 3 KPI Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className={`${cardBg} p-6 rounded-2xl shadow-lg border-l-4 border-indigo-500 flex flex-col gap-2`}>
-            <span className={`text-sm font-semibold ${subtitleColor}`}>Investimento em Mídia</span>
-            <span className="text-3xl font-black text-indigo-600">{d.investimento}</span>
-            <span className="text-xs text-zinc-400">Meta Ads + Google Ads</span>
+        {/* Top 4 KPI Cards from PDF */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className={`${cardBg} p-5 rounded-2xl shadow-md border-l-4 border-indigo-500 flex flex-col gap-1`}>
+            <span className={`text-xs font-semibold ${subtitleColor}`}>Investimento Total</span>
+            <span className="text-2xl md:text-3xl font-black text-indigo-600">{d.investimento_total || "R$ 23.337"}</span>
+            <span className="text-[11px] text-zinc-400">Jan a Out/2026</span>
           </div>
-          <div className={`${cardBg} p-6 rounded-2xl shadow-lg border-l-4 border-emerald-500 flex flex-col gap-2`}>
-            <span className={`text-sm font-semibold ${subtitleColor}`}>Custo Médio por Lead (CPL)</span>
-            <span className="text-3xl font-black text-emerald-600">{d.cpa_medio}</span>
-            <span className="text-xs text-emerald-600 font-semibold">~430 a 450 contatos gerados/mês</span>
+          <div className={`${cardBg} p-5 rounded-2xl shadow-md border-l-4 border-emerald-500 flex flex-col gap-1`}>
+            <span className={`text-xs font-semibold ${subtitleColor}`}>Conversas Iniciadas</span>
+            <span className="text-2xl md:text-3xl font-black text-emerald-600">{d.conversas_total || "2.422"}</span>
+            <span className="text-[11px] text-emerald-600 font-semibold">Campanhas de mensagem</span>
           </div>
-          <div className={`${cardBg} p-6 rounded-2xl shadow-lg border-l-4 border-red-500 flex flex-col gap-2`}>
-            <span className={`text-sm font-semibold ${subtitleColor}`}>Leads Frios / Fora de Perfil</span>
-            <span className="text-3xl font-black text-red-600">{d.verba_perdida}</span>
-            <span className="text-xs text-red-500 font-semibold">{d.venda_zero?.valor || "~220 contatos/mês"} desqualificados</span>
+          <div className={`${cardBg} p-5 rounded-2xl shadow-md border-l-4 border-amber-500 flex flex-col gap-1`}>
+            <span className={`text-xs font-semibold ${subtitleColor}`}>Custo Médio / Conversa</span>
+            <span className="text-2xl md:text-3xl font-black text-amber-500">{d.cpa_medio || "R$ 7,37"}</span>
+            <span className="text-[11px] text-zinc-400">R$ 17.850 em mensagens</span>
+          </div>
+          <div className={`${cardBg} p-5 rounded-2xl shadow-md border-l-4 border-rose-500 flex flex-col gap-1`}>
+            <span className={`text-xs font-semibold ${subtitleColor}`}>Alcance Único & Freq.</span>
+            <span className="text-2xl md:text-3xl font-black text-rose-600">{d.alcance_total || "675.118"}</span>
+            <span className="text-[11px] text-zinc-400">Freq. média: {d.frequencia || "2,93"} • CPM {d.cpm_medio || "R$ 11,78"}</span>
           </div>
         </div>
 
-        {/* Combo Chart (Pedidos vs. CPA) */}
-        <HistoricalMetaAdsChart isLight={isLight} />
+        {/* Audit Charts Component from PDF */}
+        <MetaAdsAuditCharts isLight={isLight} d={d} />
 
-        {/* 2 Bottom Columns: Funcionou vs Não Funcionou */}
+        {/* 2 Bottom Columns: O que funcionou vs O que não funcionou */}
         <div className="grid md:grid-cols-2 gap-8">
           {/* O que funcionou */}
           <div className={`${isLight ? 'bg-emerald-50' : 'bg-emerald-950/20'} p-8 rounded-2xl border border-emerald-200/50 flex flex-col`}>
@@ -1040,12 +1102,12 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-emerald-700 dark:text-emerald-400">O que funcionou (Manter & Escalar)</h3>
-                <p className={`text-sm ${subtitleColor}`}>{d.venda_rastreada.pedidos} festas no ano ({d.venda_rastreada.valor})</p>
+                <h3 className="text-xl font-bold text-emerald-700 dark:text-emerald-400">O que os dados comprovam (Manter & Reativar)</h3>
+                <p className={`text-sm ${subtitleColor}`}>Linhas eficientes e perfil ideal</p>
               </div>
             </div>
             <ul className="flex flex-col gap-4">
-              {d.funcionou.map((item: string, i: number) => (
+              {d.funcionou?.map((item: string, i: number) => (
                 <li key={i} className="flex gap-3 items-start">
                   <div className="mt-1.5 w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                   <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>{item}</span>
@@ -1061,12 +1123,12 @@ const HistoricalMetaAdsChart = ({ isLight }: { isLight: boolean }) => {
                 <AlertTriangle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-red-700 dark:text-red-400">Gargalos Críticos (Corrigir Definitivamente)</h3>
-                <p className={`text-sm ${subtitleColor}`}>Falhas operacionais e de qualificação</p>
+                <h3 className="text-xl font-bold text-red-700 dark:text-red-400">Gargalos Encontrados na Conta (Corrigir no Setup)</h3>
+                <p className={`text-sm ${subtitleColor}`}>Pulverização, desvios e falta de CRM</p>
               </div>
             </div>
             <ul className="flex flex-col gap-4">
-              {d.nao_funcionou.map((item: string, i: number) => (
+              {d.nao_funcionou?.map((item: string, i: number) => (
                 <li key={i} className="flex gap-3 items-start">
                   <div className="mt-1.5 w-2 h-2 rounded-full bg-red-500 shrink-0" />
                   <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>{item}</span>

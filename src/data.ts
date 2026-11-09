@@ -123,44 +123,53 @@ export const presentationData = {
       "id": "07_analise_meta",
       "slide_type": "meta_ads_analysis",
       "content_slots": {
-        "titulo": "Análise Histórica de Vendas & Gargalo Comercial",
-        "investimento": "R$ 3.000 a R$ 4.000/mês",
-        "cpa_medio": "R$ 8,88 (CPL)",
-        "verba_perdida": "50% Leads Frios",
-        "venda_rastreada": {
-          "valor": "R$ 1.471.138,19",
-          "pedidos": 433,
-          "origem": "Faturamento Real dos Últimos 12 Meses (Média R$ 122,5k/mês)"
-        },
-        "venda_zero": {
-          "valor": "~220 Leads/mês",
-          "pedidos": 0,
-          "origem": "Contatos desqualificados (decoração avulsa, 15 anos, limo)"
-        },
-        "historico_mensal": [
-          { "mes": "Jan", "pedidos": 36, "cpa": 83.33, "investimento": "R$ 3.000,00" },
-          { "mes": "Fev", "pedidos": 41, "cpa": 73.17, "investimento": "R$ 3.000,00" },
-          { "mes": "Mar", "pedidos": 48, "cpa": 62.50, "investimento": "R$ 3.000,00" },
-          { "mes": "Abr", "pedidos": 40, "cpa": 75.00, "investimento": "R$ 3.000,00" },
-          { "mes": "Mai", "pedidos": 46, "cpa": 65.21, "investimento": "R$ 3.000,00" },
-          { "mes": "Jun", "pedidos": 23, "cpa": 130.43, "investimento": "R$ 3.000,00", "alerta": "Queda no tráfego da agência anterior" },
-          { "mes": "Jul", "pedidos": 23, "cpa": 130.43, "investimento": "R$ 3.000,00", "alerta": "Férias escolares com baixa captação" },
-          { "mes": "Ago", "pedidos": 43, "cpa": 69.76, "investimento": "R$ 3.000,00" },
-          { "mes": "Set", "pedidos": 33, "cpa": 121.21, "investimento": "R$ 4.000,00", "alerta": "R$ 105k faturados (19 Primes, 7 VIPs, 5 Domicílio)" },
-          { "mes": "Out", "pedidos": 28, "cpa": 142.85, "investimento": "R$ 4.000,00", "alerta": "Pior mês do ano (~R$ 70k): atraso no WhatsApp e criativos frios" }
+        "titulo": "Auditoria Histórica da Conta Meta Ads (Jan a Out/2026)",
+        "subtitulo_periodo": "Acumulado de 01/01 a 31/10/2026 • Gerenciador de Anúncios Oficial",
+        "investimento_total": "R$ 23.337",
+        "conversas_total": "2.422",
+        "cpa_medio": "R$ 7,37",
+        "alcance_total": "675.118",
+        "frequencia": "2,93",
+        "cpm_medio": "R$ 11,78",
+        "cliques_total": "44.035",
+        "cpc_medio": "R$ 0,53",
+        "ctr_link": "2,22%",
+        "linhas_oferta": [
+          { "linha": "Festa dos Sonhos", "conjuntos": 1, "investido": "R$ 2.841,72", "pct_verba": "15,9%", "conversas": 550, "custo_conversa": 5.17, "cpm": "R$ 23,55", "ctr": "1,29%", "clique_para_conversa": "35,3%", "status": "Parada" },
+          { "linha": "Day Spa", "conjuntos": 2, "investido": "R$ 740,44", "pct_verba": "4,1%", "conversas": 141, "custo_conversa": 5.25, "cpm": "R$ 24,32", "ctr": "1,63%", "clique_para_conversa": "28,4%", "status": "Parada" },
+          { "linha": "Festa em Domicílio", "conjuntos": 3, "investido": "R$ 4.118,62", "pct_verba": "23,1%", "conversas": 639, "custo_conversa": 6.45, "cpm": "R$ 27,34", "ctr": "1,50%", "clique_para_conversa": "28,4%", "status": "Parada" },
+          { "linha": "Sazonais e Promoções", "conjuntos": 7, "investido": "R$ 1.356,12", "pct_verba": "7,6%", "conversas": 196, "custo_conversa": 6.92, "cpm": "R$ 26,18", "ctr": "1,11%", "clique_para_conversa": "34,1%", "status": "Parada" },
+          { "linha": "Festa Teens", "conjuntos": 3, "investido": "R$ 797,87", "pct_verba": "4,5%", "conversas": 89, "custo_conversa": 8.96, "cpm": "R$ 20,96", "ctr": "0,75%", "clique_para_conversa": "31,2%", "status": "Parada" },
+          { "linha": "Espaço Prime", "conjuntos": 5, "investido": "R$ 3.336,70", "pct_verba": "18,7%", "conversas": 343, "custo_conversa": 9.73, "cpm": "R$ 27,50", "ctr": "1,17%", "clique_para_conversa": "24,1%", "status": "Ativa (R$ 11,91)" },
+          { "linha": "Espaço VIP", "conjuntos": 2, "investido": "R$ 2.283,45", "pct_verba": "12,8%", "conversas": 233, "custo_conversa": 9.80, "cpm": "R$ 35,99", "ctr": "1,15%", "clique_para_conversa": "31,8%", "status": "Ativa (R$ 8,77)" },
+          { "linha": "Espaço Studio", "conjuntos": 4, "investido": "R$ 2.374,74", "pct_verba": "13,3%", "conversas": 231, "custo_conversa": 10.28, "cpm": "R$ 30,84", "ctr": "1,10%", "clique_para_conversa": "27,4%", "status": "Parada" }
         ],
-        "cpa_referencia_historica": 80.00,
+        "idade_distribuicao": [
+          { "faixa": "18-24", "msg": 0.4, "clique": 2.5, "conversas": 13, "custo": "R$ 2,46" },
+          { "faixa": "25-34", "msg": 32.1, "clique": 18.7, "conversas": 589, "custo": "R$ 6,67" },
+          { "faixa": "35-44", "msg": 46.7, "clique": 18.5, "conversas": 1171, "custo": "R$ 7,74" },
+          { "faixa": "45-54", "msg": 15.7, "clique": 17.4, "conversas": 539, "custo": "R$ 7,64" },
+          { "faixa": "55-64", "msg": 1.7, "clique": 20.2, "conversas": 61, "custo": "R$ 7,60" },
+          { "faixa": "65+", "msg": 0.9, "clique": 22.8, "conversas": 45, "custo": "R$ 4,92" }
+        ],
+        "genero": {
+          "mulheres_verba_msg": "97,3%",
+          "mulheres_custo_conversa": "R$ 7,33",
+          "homens_custo_conversa": "R$ 9,84",
+          "clique_55plus_desvio": "42,9% do clique foi para 55+ anos (contra apenas 2,7% em mensagens)"
+        },
+        "oportunidade_repescagem": "7 conjuntos custaram R$ 11 ou mais por conversa e somaram R$ 4.663 (377 conversas). Se rendessem a R$ 7,00, gerariam 666 conversas (+289 contatos qualificados ou +11,9% na conta).",
         "funcionou": [
-          "Espaço Prime como carro-chefe de alta lucratividade (~30% de margem líquida) e maior percepção de valor.",
-          "Indicação orgânica e convidados de eventos (60% a 70% das vendas fechadas têm CAC zero).",
-          "Brinde exclusivo da boneca de pano 'Princess', gerando forte apelo emocional e fechamento rápido.",
-          "Oferta combinada de Festa Prime com Limousine inclusa (sucesso absoluto na Black Friday de anos anteriores)."
+          "Festa dos Sonhos (R$ 5,17/conversa), Day Spa (R$ 5,25) e Festa em Domicílio (R$ 6,45): linhas com custo muito abaixo da média geral (R$ 7,37).",
+          "Mulheres de 25 a 44 anos concentram 78,8% das conversas a R$ 7,33, validando o perfil ideal de mãe decisora com CPM equilibrado.",
+          "Festa em Domicílio foi o maior volume individual da conta (639 conversas geradas com R$ 4.118 investidos), provando forte tração do formato móvel.",
+          "Taxa de clique para conversa (CTR de conversão em chat) atingiu picos de 35,3% em Festa dos Sonhos e 34,1% nas sazonais."
         ],
         "nao_funcionou": [
-          "Gargalo no tempo de resposta comercial no WhatsApp: leads do sábado respondidos na segunda-feira causavam evasão massiva.",
-          "Falta de CRM e rastreamento: uso de Zip Chat sem tags de campanha, sem motivos de perda e sem cadência de follow-up.",
-          "Criativos estáticos e ilustrações em IA que geravam mais de 50% de leads desqualificados fora do perfil de spa infantil.",
-          "Guerra de preços: baixar valores para competir com concorrentes sucateados atraiu público de reclamação e afastou a classe B+/A."
+          "Pulverização excessiva da verba: 33 campanhas para R$ 23.337 com apenas 1 anúncio por conjunto (13 conjuntos nunca chegaram a 50 conversas).",
+          "Campanhas ativas mais caras que a média: Festa Prime rodando a R$ 11,91 e Espaço VIP a R$ 8,77, enquanto a Festa dos Sonhos (R$ 5,17) estava parada.",
+          "Desvio de público em tráfego de clique: 23,3% da verba foi em cliques a R$ 0,15, mas 42,9% das impressões caíram em pessoas com 55+ anos fora do público comprador.",
+          "Falta de rastreamento de vendas no Meta: colunas de Leads e Compras zeradas sem integração de conversão de fechamento ou ticket por pacote."
         ]
       }
     },
@@ -417,8 +426,61 @@ export const presentationData = {
       "slide_type": "visual_drawflow",
       "content_slots": {
         "titulo": "Drawflow do Funil de Atendimento & Vendas",
-        "subtitulo": "Arquitetura validada para o orçamento de R$ 3.000 a R$ 4.000/mês com Umbler IA",
-        "orcamento_total": "R$ 3.000 a R$ 4.000 / mês"
+        "subtitulo": "Nova arquitetura baseada na auditoria oficial Meta Ads (Consolidação de Linhas, Triagem IA e Rastreamento CRM)",
+        "orcamento_total": "R$ 3.000 a R$ 4.000 / mês",
+        "etapas_midia": [
+          {
+            "percentual": "70% da Verba",
+            "orcamento": "R$ 2.100 a R$ 2.800 / mês",
+            "tag": "Motor de Mensagens por Linha",
+            "titulo": "Campanhas Contínuas por Oferta",
+            "cor": "emerald",
+            "destaques": [
+              "Reativação Festa dos Sonhos (R$ 5,17) e Domicílio (R$ 4,83)",
+              "3 a 4 criativos novos em vídeo para oxigenar Prime e VIP",
+              "1 campanha contínua por linha (evita reinício de aprendizado)"
+            ]
+          },
+          {
+            "percentual": "20% da Verba",
+            "orcamento": "R$ 600 a R$ 800 / mês",
+            "tag": "Anti-Vazamento Demográfico",
+            "titulo": "Tráfego Restrito Mulheres 25-54a",
+            "cor": "indigo",
+            "destaques": [
+              "Fim do vazamento de 42,9% de cliques para público 55+",
+              "Foco absoluto nas decisoras (78,8% das conversas de valor)",
+              "Tráfego qualificado para Landing Page e WhatsApp direto"
+            ]
+          },
+          {
+            "percentual": "10% da Verba",
+            "orcamento": "R$ 300 a R$ 400 / mês",
+            "tag": "Volume Crítico & Retenção",
+            "titulo": "Remarketing & Testes com Volume",
+            "cor": "amber",
+            "destaques": [
+              "Separação de público frio e remarketing estruturado",
+              "Mínimo de 50+ conversas/conjunto para aprendizado estável",
+              "Impacto contínuo na base de 4k contatos e visitantes do perfil"
+            ]
+          }
+        ],
+        "triagem": {
+          "titulo": "Triagem Umbler IA (< 2 min) + WhatsApp",
+          "descricao": "Atendimento imediato 24/7 com qualificação automática (nome, idade, data, convidadas e pacote desejado)",
+          "tag_origem": "Tag de Origem de Campanha anexada ao Lead para rastreamento de ROAS",
+          "meta": "60 a 80 Festas / Mês"
+        },
+        "comercial": {
+          "titulo": "Apresentação Comercial Consultiva (Juliana & Simoni)",
+          "descricao": "Tour em vídeo ao vivo pelo espaço, proposta ágil e apresentação dos diferenciais (Limousine, Robô Dançarino, Boneca Princess)"
+        },
+        "crm_retencao": {
+          "titulo": "Fechamento Comercial, Rastreamento CRM & Retenção LTV",
+          "acao_urgente": "Ação Prioritária #1: Cruzamento de conversas com vendas e ticket médio para apurar o ROAS real por pacote",
+          "retencao": "Pós-venda D+1: Agradecimento e ativação imediata de mães convidadas da festa (CAC zero)"
+        }
       }
     },
     {
