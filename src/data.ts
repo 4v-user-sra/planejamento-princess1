@@ -200,7 +200,7 @@ export const presentationData = {
           },
           {
             "titulo": "Gastronomia Refinada vs. Buffet Industrializado (Onde Ganhamos)",
-            "texto": "O serviço gastronômico deles segue o modelo convencional de festas infantis, com foco em frituras, massas simples e salgadinhos comerciais, dando pouca atenção à experiência dos adultos presentes. Aqui a Princess House se destaca amplamente ao oferecer uma mesa fresca, elegante e a parceria com a Doceria Labaçane, encantando pais exigentes.",
+            "texto": "O serviço gastronômico deles segue o modelo convencional de festas infantis, com foco em frituras, massas simples e salgadinhos comerciais, dando pouca atenção à experiência dos adultos presentes.",
             "tipo": "negativo"
           },
           {
@@ -284,8 +284,8 @@ export const presentationData = {
             "descricao": "Aqui o foco é 100% no brilho nos olhos da aniversariante e das amigas. Não é uma maquiagem rápida de salão comum: é um Dia de Princesa completo com roupões de cetim, hidromassagem real com cromoterapia, massagem facial, penteados com glitter e o ponto alto com desfile na passarela iluminada e coroação. E os pais acompanham tudo de perto em lounges confortáveis, com total tranquilidade."
           },
           {
-            "titulo": "Gastronomia Nobre & Confiança Total (Doceria Labaçane)",
-            "descricao": "Festa infantil de alto padrão precisa de um cardápio à altura dos adultos e das crianças. Nossa parceria exclusiva com a Doceria Labaçane entrega salgados finos, doces artesanais e apresentação impecável. Isso blinda a marca contra buffets que cortam custos com comida caseira sem procedência e gera elogios espontâneos das famílias."
+            "titulo": "Gastronomia Nobre & Confiança Total",
+            "descricao": "Festa infantil de alto padrão precisa de um cardápio à altura dos adultos e das crianças. Nossa parceria exclusiva com doceria de alta qualidade entrega salgados finos, doces artesanais e apresentação impecável. Isso blinda a marca contra buffets que cortam custos com comida caseira sem procedência e gera elogios espontâneos das famílias."
           },
           {
             "titulo": "Multiambientes & Estrutura Pronta para Franquias",
