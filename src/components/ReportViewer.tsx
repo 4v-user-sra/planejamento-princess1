@@ -331,8 +331,8 @@ function RenderBlock({ slide }: { slide: any }) {
           <div className="space-y-12">
             <div>
               <h4 className={`text-sm font-bold ${isLight ? 'text-zinc-500' : 'text-zinc-400'} uppercase tracking-widest mb-4`}>Tipografia Principal</h4>
-              <p className={`text-5xl font-serif ${titleColor} mb-2`}>{d.tipografia_principal}</p>
-              <p className={`text-2xl font-serif ${subtitleColor} italic`}>Libre Baskerville</p>
+              <p className={`text-6xl font-signature ${titleColor} mb-2 tracking-wide leading-tight`} style={{ fontFamily: "'Brittany Signature', cursive" }}>{d.tipografia_principal}</p>
+              <p className={`text-3xl font-signature ${subtitleColor}`} style={{ fontFamily: "'Brittany Signature', cursive" }}>Brittany Signature</p>
             </div>
             <div>
               <h4 className={`text-sm font-bold ${isLight ? 'text-zinc-500' : 'text-zinc-400'} uppercase tracking-widest mb-4`}>Tipografia Secundária</h4>
@@ -552,7 +552,6 @@ function RenderBlock({ slide }: { slide: any }) {
 
 
 const MetaAdsAuditCharts = ({ isLight, d }: { isLight: boolean; d: any }) => {
-  const [activeTab, setActiveTab] = useState<'linhas' | 'demografia' | 'oportunidade'>('linhas');
   const [hoveredOffer, setHoveredOffer] = useState<number | null>(null);
 
   const linhas = d?.linhas_oferta || [
@@ -579,233 +578,247 @@ const MetaAdsAuditCharts = ({ isLight, d }: { isLight: boolean; d: any }) => {
   const mediaConta = 7.37;
 
   return (
-    <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl flex flex-col gap-6`}>
-      {/* Header with Title & Tab Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4 border-zinc-200 dark:border-zinc-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <BarChart2 className="w-5 h-5 text-red-600" />
-            <h3 className={`text-lg font-bold ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
-              Auditoria Meta Ads: Custo por Conversa por Linha de Oferta & Demografia
-            </h3>
+    <div className="w-full flex flex-col gap-8">
+      {/* Bloco 1: Linhas de Oferta (Custo por Conversa) */}
+      <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl flex flex-col gap-5`}>
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4 border-zinc-200 dark:border-zinc-800">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-600/10 text-red-600 border border-red-600/20">
+                Indicador 1 de 3
+              </span>
+              <h3 className={`text-lg font-bold ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                Custo por Conversa por Linha de Oferta vs. Média da Conta
+              </h3>
+            </div>
+            <p className={`text-xs mt-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+              Acumulado Jan a Out/2026 • 2.422 conversas em mensagens (Investimento total: R$ 17.850)
+            </p>
           </div>
-          <p className={`text-xs mt-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
-            Acumulado Jan-Out/2026 (R$ 23.337 investidos • 2.422 conversas a R$ 7,37 de média)
-          </p>
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
+            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Abaixo da média (&lt; R$ 7,37)
+            </span>
+            <span className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500" /> Acima da média (&gt; R$ 7,37)
+            </span>
+            <span className="text-zinc-400 font-mono">Benchmark: R$ 7,37</span>
+          </div>
         </div>
 
-        {/* Tab Buttons */}
-        <div className="flex rounded-xl p-1 bg-zinc-100 dark:bg-zinc-800 text-xs font-bold">
-          <button
-            onClick={() => setActiveTab('linhas')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'linhas' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
-          >
-            Linhas de Oferta (R$/conversa)
-          </button>
-          <button
-            onClick={() => setActiveTab('demografia')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'demografia' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
-          >
-            Idade & Gênero (Desvio 55+)
-          </button>
-          <button
-            onClick={() => setActiveTab('oportunidade')}
-            className={`px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'oportunidade' ? 'bg-red-600 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'}`}
-          >
-            Tamanho da Oportunidade
-          </button>
+        <div className="space-y-3">
+          {linhas.map((item: any, idx: number) => {
+            const isBelowAvg = item.custo_conversa < mediaConta;
+            const barWidth = `${(item.custo_conversa / maxCusto) * 100}%`;
+            const isHovered = hoveredOffer === idx;
+
+            return (
+              <div
+                key={idx}
+                className={`p-3 rounded-xl border transition-all cursor-pointer ${isHovered ? (isLight ? 'bg-zinc-50 border-zinc-300 shadow-md' : 'bg-zinc-800/80 border-zinc-700 shadow-lg') : (isLight ? 'bg-white border-zinc-100' : 'bg-zinc-900/60 border-zinc-800/80')}`}
+                onMouseEnter={() => setHoveredOffer(idx)}
+                onMouseLeave={() => setHoveredOffer(null)}
+              >
+                <div className="flex items-center justify-between text-xs mb-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className={`font-bold text-sm ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                      {item.linha}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${item.status.includes('Ativa') ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'}`}>
+                      {item.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4 text-xs">
+                    <span className="text-zinc-500"><strong>{item.conversas}</strong> conversas ({item.pct_verba} verba)</span>
+                    <span className="text-zinc-500">CPM {item.cpm}</span>
+                    <span className={`text-sm font-black font-mono ${isBelowAvg ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                      R$ {item.custo_conversa.toFixed(2).replace('.', ',')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Horizontal Bar with Benchmark Line */}
+                <div className="relative w-full h-4 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${isBelowAvg ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-gradient-to-r from-rose-400 to-rose-600'}`}
+                    style={{ width: barWidth }}
+                  />
+                  {/* Media line reference marker at 61.4% (7.37/12) */}
+                  <div
+                    className="absolute top-0 bottom-0 w-0.5 bg-zinc-900 dark:bg-white z-10"
+                    style={{ left: `${(mediaConta / maxCusto) * 100}%` }}
+                    title="Média Geral: R$ 7,37"
+                  />
+                </div>
+
+                {isHovered && (
+                  <div className="mt-2.5 pt-2 border-t border-zinc-200 dark:border-zinc-800 flex justify-between text-[11px] text-zinc-500">
+                    <span>Investimento total: <strong>{item.investido}</strong> em {item.conjuntos} conjunto(s)</span>
+                    <span>CTR no link: <strong>{item.ctr}</strong></span>
+                    <span>Taxa de clique p/ conversa: <strong>{item.clique_para_conversa}</strong></span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={`p-4 rounded-xl border flex items-start gap-3 transition-colors ${
+          isLight
+            ? 'bg-amber-100/90 border-amber-300 text-amber-950 shadow-sm'
+            : 'bg-amber-950/40 border-amber-500/50 text-amber-100'
+        }`}>
+          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${isLight ? 'text-amber-800' : 'text-amber-400'}`} />
+          <div className={`text-xs leading-relaxed font-medium ${isLight ? 'text-amber-950' : 'text-amber-100'}`}>
+            <strong className={`font-black ${isLight ? 'text-amber-950' : 'text-amber-200'}`}>Distorção Crítica de Campanhas Ativas:</strong> As duas linhas ativas na exportação estão custando muito acima da média (Festa Prime a R$ 11,91 e Espaço VIP a R$ 8,77), enquanto a <strong className={`font-black ${isLight ? 'text-amber-950' : 'text-amber-200'}`}>Festa dos Sonhos</strong> — a mais barata e de maior conversão (R$ 5,17/conversa e 35,3% de taxa de chat) — estava parada.
+          </div>
         </div>
       </div>
 
-      {/* Tab 1: Linhas de Oferta Horizontal Bar Chart */}
-      {activeTab === 'linhas' && (
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center text-xs font-semibold px-2">
-            <span className="text-zinc-500">Linha de Oferta</span>
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Abaixo da média (&lt; R$ 7,37)
-              </span>
-              <span className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-500" /> Acima da média (&gt; R$ 7,37)
-              </span>
-              <span className="text-zinc-400 font-mono">Média da Conta: R$ 7,37</span>
-            </div>
+      {/* Bloco 2: Demografia & Dispersão de Cliques */}
+      <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl flex flex-col gap-5`}>
+        <div className="border-b pb-4 border-zinc-200 dark:border-zinc-800">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-600/10 text-indigo-600 border border-indigo-600/20">
+              Indicador 2 de 3
+            </span>
+            <h3 className={`text-lg font-bold ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+              Distribuição Demográfica: Idade, Gênero & Gargalo de Cliques no Link
+            </h3>
           </div>
+          <p className={`text-xs mt-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+            Comparativo de impressões entre Campanhas de Mensagens e Campanhas de Cliques
+          </p>
+        </div>
 
-          <div className="space-y-3">
-            {linhas.map((item: any, idx: number) => {
-              const isBelowAvg = item.custo_conversa < mediaConta;
-              const barWidth = `${(item.custo_conversa / maxCusto) * 100}%`;
-              const isHovered = hoveredOffer === idx;
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Mensagem vs Clique por Idade */}
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'}`}>
+            <h4 className={`text-sm font-bold mb-3 flex items-center justify-between ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+              <span>Participação nas Impressões por Idade</span>
+              <span className="text-[11px] font-normal text-zinc-500">Mensagens vs. Cliques</span>
+            </h4>
 
-              return (
-                <div
-                  key={idx}
-                  className={`p-3 rounded-xl border transition-all cursor-pointer ${isHovered ? (isLight ? 'bg-zinc-50 border-zinc-300 shadow-md' : 'bg-zinc-800/80 border-zinc-700 shadow-lg') : (isLight ? 'bg-white border-zinc-100' : 'bg-zinc-900/60 border-zinc-800/80')}`}
-                  onMouseEnter={() => setHoveredOffer(idx)}
-                  onMouseLeave={() => setHoveredOffer(null)}
-                >
-                  <div className="flex items-center justify-between text-xs mb-1.5">
+            <div className="space-y-3">
+              {idades.map((item: any, idx: number) => (
+                <div key={idx} className="space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="font-bold">{item.faixa} anos</span>
+                    <span className="text-zinc-500">{item.conversas} conversas ({item.custo}/conversa)</span>
+                  </div>
+                  {/* Double bar: Red for Mensagens, Blue for Cliques */}
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className={`font-bold text-sm ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
-                        {item.linha}
-                      </span>
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${item.status.includes('Ativa') ? 'bg-rose-100 text-rose-700 border border-rose-200' : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'}`}>
-                        {item.status}
-                      </span>
+                      <span className="text-[10px] w-12 text-rose-600 font-semibold">Msg: {item.msg}%</span>
+                      <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-rose-600 rounded-full" style={{ width: `${item.msg * 2}%` }} />
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4 text-xs">
-                      <span className="text-zinc-500"><strong>{item.conversas}</strong> conversas ({item.pct_verba} verba)</span>
-                      <span className="text-zinc-500">CPM {item.cpm}</span>
-                      <span className={`text-sm font-black font-mono ${isBelowAvg ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
-                        R$ {item.custo_conversa.toFixed(2).replace('.', ',')}
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] w-12 text-indigo-600 font-semibold">Cliq: {item.clique}%</span>
+                      <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${item.clique * 2}%` }} />
+                      </div>
                     </div>
                   </div>
-
-                  {/* Horizontal Bar with Benchmark Line */}
-                  <div className="relative w-full h-4 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${isBelowAvg ? 'bg-gradient-to-r from-emerald-400 to-emerald-600' : 'bg-gradient-to-r from-rose-400 to-rose-600'}`}
-                      style={{ width: barWidth }}
-                    />
-                    {/* Media line reference marker at 61.4% (7.37/12) */}
-                    <div
-                      className="absolute top-0 bottom-0 w-0.5 bg-zinc-900 dark:bg-white z-10"
-                      style={{ left: `${(mediaConta / maxCusto) * 100}%` }}
-                      title="Média Geral: R$ 7,37"
-                    />
-                  </div>
-
-                  {isHovered && (
-                    <div className="mt-2.5 pt-2 border-t border-zinc-200 dark:border-zinc-800 flex justify-between text-[11px] text-zinc-500">
-                      <span>Investimento total: <strong>{item.investido}</strong> em {item.conjuntos} conjunto(s)</span>
-                      <span>CTR no link: <strong>{item.ctr}</strong></span>
-                      <span>Taxa de clique p/ conversa: <strong>{item.clique_para_conversa}</strong></span>
-                    </div>
-                  )}
                 </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-2 p-3 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-            <div>
-              <strong>Distorção Crítica de Campanhas Ativas:</strong> As duas linhas ativas na exportação estão custando muito acima da média (Festa Prime a R$ 11,91 e Espaço VIP a R$ 8,77), enquanto a <strong>Festa dos Sonhos</strong> — a mais barata e de maior conversão (R$ 5,17/conversa e 35,3% de taxa de chat) — estava parada.
+              ))}
             </div>
           </div>
-        </div>
-      )}
 
-      {/* Tab 2: Idade & Gênero */}
-      {activeTab === 'demografia' && (
-        <div className="flex flex-col gap-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Mensagem vs Clique por Idade */}
+          {/* Gênero e Diagnóstico de Desvio */}
+          <div className="flex flex-col justify-between gap-4">
             <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'}`}>
-              <h4 className={`text-sm font-bold mb-3 flex items-center justify-between ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
-                <span>Participação nas Impressões por Idade</span>
-                <span className="text-[11px] font-normal text-zinc-500">Mensagens vs. Cliques</span>
+              <h4 className={`text-sm font-bold mb-2 ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                Divisão de Gênero em Mensagens
               </h4>
-
-              <div className="space-y-3">
-                {idades.map((item: any, idx: number) => (
-                  <div key={idx} className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="font-bold">{item.faixa} anos</span>
-                      <span className="text-zinc-500">{item.conversas} conversas ({item.custo}/conversa)</span>
-                    </div>
-                    {/* Double bar: Red for Mensagens, Blue for Cliques */}
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] w-12 text-rose-600 font-semibold">Msg: {item.msg}%</span>
-                        <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-                          <div className="h-full bg-rose-600 rounded-full" style={{ width: `${item.msg * 2}%` }} />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] w-12 text-indigo-600 font-semibold">Cliq: {item.clique}%</span>
-                        <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-                          <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${item.clique * 2}%` }} />
-                        </div>
-                      </div>
-                    </div>
+              <div className="space-y-3 text-xs">
+                <div className="flex justify-between items-center p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/40">
+                  <div>
+                    <span className="font-bold text-rose-700 dark:text-rose-400 block">Mulheres (97,3% da verba)</span>
+                    <span className="text-zinc-500">2.369 conversas geradas</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Gênero e Diagnóstico de Desvio */}
-            <div className="flex flex-col justify-between gap-4">
-              <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'}`}>
-                <h4 className={`text-sm font-bold mb-2 ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
-                  Divisão de Gênero em Mensagens
-                </h4>
-                <div className="space-y-3 text-xs">
-                  <div className="flex justify-between items-center p-2 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/40">
-                    <div>
-                      <span className="font-bold text-rose-700 dark:text-rose-400 block">Mulheres (97,3% da verba)</span>
-                      <span className="text-zinc-500">2.369 conversas geradas</span>
-                    </div>
-                    <span className="text-base font-black text-rose-600">R$ 7,33 /conversa</span>
+                  <span className="text-base font-black text-rose-600">R$ 7,33 /conversa</span>
+                </div>
+                <div className="flex justify-between items-center p-2.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                  <div>
+                    <span className="font-bold text-zinc-700 dark:text-zinc-300 block">Homens (2,4% da verba)</span>
+                    <span className="text-zinc-500">43 conversas geradas</span>
                   </div>
-                  <div className="flex justify-between items-center p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
-                    <div>
-                      <span className="font-bold text-zinc-700 dark:text-zinc-300 block">Homens (2,4% da verba)</span>
-                      <span className="text-zinc-500">43 conversas geradas</span>
-                    </div>
-                    <span className="text-base font-black text-zinc-600">R$ 9,84 /conversa (+34%)</span>
-                  </div>
+                  <span className="text-base font-black text-zinc-600">R$ 9,84 /conversa (+34%)</span>
                 </div>
               </div>
+            </div>
 
-              {/* Finding Box on Click Leakage */}
-              <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-xs text-red-900 dark:text-red-300 leading-relaxed">
-                <strong>Vazamento em Cliques no Link:</strong> 23,3% da verba foi gasta em campanhas de clique a R$ 0,15, porém <strong>42,9% das impressões foram entregues para pessoas com 55 anos ou mais</strong> (nas campanhas de mensagem, 55+ representou apenas 2,7%). Tráfego barato, mas fora do perfil comprador de festas infantis.
-              </div>
+            {/* Finding Box on Click Leakage */}
+            <div className={`p-4 rounded-xl border leading-relaxed text-xs transition-colors ${
+              isLight
+                ? 'bg-rose-100/90 border-rose-300 text-rose-950 shadow-sm font-medium'
+                : 'bg-rose-950/40 border-rose-500/50 text-rose-100 font-normal'
+            }`}>
+              <strong className={`font-black ${isLight ? 'text-rose-950' : 'text-rose-200'}`}>Vazamento em Cliques no Link:</strong>{' '}
+              <span>
+                23,3% da verba foi gasta em campanhas de clique a R$ 0,15, porém{' '}
+                <strong className={`font-black ${isLight ? 'text-rose-950' : 'text-rose-200'}`}>42,9% das impressões foram entregues para pessoas com 55 anos ou mais</strong>{' '}
+                (nas campanhas de mensagem, 55+ representou apenas 2,7%). Tráfego barato, mas fora do perfil comprador de festas infantis.
+              </span>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Tab 3: Tamanho da Oportunidade & Prioridades */}
-      {activeTab === 'oportunidade' && (
-        <div className="flex flex-col gap-4">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
-              <span className="text-xs text-zinc-500 block uppercase">Conjuntos com Custo &gt; R$ 11</span>
-              <span className="text-3xl font-black text-rose-600 mt-1 block">7 conjuntos</span>
-              <span className="text-xs text-zinc-400">Somaram R$ 4.663 investidos</span>
-            </div>
-            <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
-              <span className="text-xs text-zinc-500 block uppercase">Conversas Geradas neles</span>
-              <span className="text-3xl font-black text-amber-500 mt-1 block">377 conversas</span>
-              <span className="text-xs text-zinc-400">Custo médio elevado (&gt; R$ 12,30)</span>
-            </div>
-            <div className={`p-4 rounded-xl border ${isLight ? 'bg-emerald-50 border-emerald-200' : 'bg-emerald-950/30 border-emerald-900/50'} text-center`}>
-              <span className="text-xs text-emerald-700 dark:text-emerald-400 block uppercase font-bold">Potencial a R$ 7,00/conversa</span>
-              <span className="text-3xl font-black text-emerald-600 mt-1 block">+289 conversas</span>
-              <span className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">+11,9% de volume sobre a conta inteira</span>
-            </div>
+      {/* Bloco 3: Tamanho da Oportunidade & Prioridades */}
+      <div className={`w-full rounded-2xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'} p-6 shadow-xl flex flex-col gap-5`}>
+        <div className="border-b pb-4 border-zinc-200 dark:border-zinc-800">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-600/10 text-emerald-600 border border-emerald-600/20">
+              Indicador 3 de 3
+            </span>
+            <h3 className={`text-lg font-bold ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+              Tamanho da Oportunidade & Plano de Ação Prioritário
+            </h3>
           </div>
+          <p className={`text-xs mt-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+            Simulação de ganho recuperando o CPA de conjuntos saturados e estancando o vazamento de tráfego
+          </p>
+        </div>
 
-          <div className={`p-4 rounded-xl border ${isLight ? 'bg-white border-zinc-200' : 'bg-zinc-900/60 border-zinc-800'} text-xs space-y-2`}>
-            <div className="font-bold text-sm text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              Direcionamentos Imediatos de Otimização (Plano de Ação Meta Ads):
-            </div>
-            <ol className="list-decimal pl-5 space-y-1.5 text-zinc-600 dark:text-zinc-300">
-              <li><strong>Ligar conversa a venda:</strong> marcar a campanha de origem no CRM para decidir cortes por ROAS e ticket, e não apenas pelo custo da conversa.</li>
-              <li><strong>Revisar Prime e VIP ativas:</strong> Festa Prime só converte 18,6% dos cliques em chat (trocar promessa/criativo antes de escalar verba).</li>
-              <li><strong>Religar o que já provou resultado:</strong> reativar Festa dos Sonhos (R$ 5,17) e a versão de setembro de Domicílio (R$ 4,83).</li>
-              <li><strong>Consolidar por linha de oferta:</strong> acabar com as 33 campanhas pulverizadas; ter 1 campanha contínua por linha com 3 a 4 criativos por conjunto.</li>
-              <li><strong>Restringir campanhas de tráfego/clique:</strong> limitar a mulheres de 25 a 54 anos para eliminar o desperdício com público 55+.</li>
-            </ol>
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
+            <span className="text-xs text-zinc-500 block uppercase">Conjuntos com Custo &gt; R$ 11</span>
+            <span className="text-3xl font-black text-rose-600 mt-1 block">7 conjuntos</span>
+            <span className="text-xs text-zinc-400">Somaram R$ 4.663 investidos</span>
+          </div>
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900 border-zinc-800'} text-center`}>
+            <span className="text-xs text-zinc-500 block uppercase">Conversas Geradas neles</span>
+            <span className="text-3xl font-black text-amber-500 mt-1 block">377 conversas</span>
+            <span className="text-xs text-zinc-400">Custo médio elevado (&gt; R$ 12,30)</span>
+          </div>
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-emerald-50 border-emerald-200' : 'bg-emerald-950/30 border-emerald-900/50'} text-center`}>
+            <span className="text-xs text-emerald-700 dark:text-emerald-400 block uppercase font-bold">Potencial a R$ 7,00/conversa</span>
+            <span className="text-3xl font-black text-emerald-600 mt-1 block">+289 conversas</span>
+            <span className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">+11,9% de volume sobre a conta inteira</span>
           </div>
         </div>
-      )}
+
+        <div className={`p-5 rounded-xl border text-xs space-y-3 transition-colors ${
+          isLight
+            ? 'bg-zinc-100/90 border-zinc-300 text-zinc-900 shadow-sm'
+            : 'bg-zinc-900/80 border-zinc-700 text-zinc-100'
+        }`}>
+          <div className={`font-black text-sm flex items-center gap-2 ${isLight ? 'text-zinc-950' : 'text-white'}`}>
+            <CheckCircle2 className={`w-4 h-4 shrink-0 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`} />
+            <span>Direcionamentos Imediatos de Otimização (Plano de Ação Meta Ads):</span>
+          </div>
+          <ol className={`list-decimal pl-5 space-y-2 leading-relaxed ${isLight ? 'text-zinc-900 font-medium' : 'text-zinc-200'}`}>
+            <li><strong className={`font-bold ${isLight ? 'text-zinc-950' : 'text-white'}`}>Ligar conversa a venda:</strong> marcar a campanha de origem no CRM para decidir cortes por ROAS e ticket, e não apenas pelo custo da conversa.</li>
+            <li><strong className={`font-bold ${isLight ? 'text-zinc-950' : 'text-white'}`}>Revisar Prime e VIP ativas:</strong> Festa Prime só converte 18,6% dos cliques em chat (trocar promessa/criativo antes de escalar verba).</li>
+            <li><strong className={`font-bold ${isLight ? 'text-zinc-950' : 'text-white'}`}>Religar o que já provou resultado:</strong> reativar Festa dos Sonhos (R$ 5,17) e a versão de setembro de Domicílio (R$ 4,83).</li>
+            <li><strong className={`font-bold ${isLight ? 'text-zinc-950' : 'text-white'}`}>Consolidar por linha de oferta:</strong> acabar com as 33 campanhas pulverizadas; ter 1 campanha contínua por linha com 3 a 4 criativos por conjunto.</li>
+            <li><strong className={`font-bold ${isLight ? 'text-zinc-950' : 'text-white'}`}>Restringir campanhas de tráfego/clique:</strong> limitar a mulheres de 25 a 54 anos para eliminar o desperdício com público 55+.</li>
+          </ol>
+        </div>
+      </div>
     </div>
   );
 };
@@ -1102,36 +1115,36 @@ const MetaAdsAuditCharts = ({ isLight, d }: { isLight: boolean; d: any }) => {
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-emerald-700 dark:text-emerald-400">O que os dados comprovam (Manter & Reativar)</h3>
-                <p className={`text-sm ${subtitleColor}`}>Linhas eficientes e perfil ideal</p>
+                <h3 className={`text-xl font-bold ${isLight ? 'text-emerald-900' : 'text-emerald-300'}`}>O que os dados comprovam (Manter & Reativar)</h3>
+                <p className={`text-sm ${isLight ? 'text-emerald-800' : subtitleColor}`}>Linhas eficientes e perfil ideal</p>
               </div>
             </div>
             <ul className="flex flex-col gap-4">
               {d.funcionou?.map((item: string, i: number) => (
                 <li key={i} className="flex gap-3 items-start">
                   <div className="mt-1.5 w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                  <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>{item}</span>
+                  <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-900 font-medium' : 'text-zinc-200'}`}>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* O que nao funcionou */}
-          <div className={`${isLight ? 'bg-red-50' : 'bg-red-950/20'} p-8 rounded-2xl border border-red-200/50 flex flex-col`}>
+          <div className={`${isLight ? 'bg-red-50 border-red-200' : 'bg-red-950/20 border-red-900/40'} p-8 rounded-2xl border flex flex-col`}>
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-red-500 rounded-xl text-white shadow-md shadow-red-500/20">
                 <AlertTriangle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-red-700 dark:text-red-400">Gargalos Encontrados na Conta (Corrigir no Setup)</h3>
-                <p className={`text-sm ${subtitleColor}`}>Pulverização, desvios e falta de CRM</p>
+                <h3 className={`text-xl font-bold ${isLight ? 'text-red-900' : 'text-red-300'}`}>Gargalos Encontrados na Conta (Corrigir no Setup)</h3>
+                <p className={`text-sm ${isLight ? 'text-red-800' : subtitleColor}`}>Pulverização, desvios e falta de CRM</p>
               </div>
             </div>
             <ul className="flex flex-col gap-4">
               {d.nao_funcionou?.map((item: string, i: number) => (
                 <li key={i} className="flex gap-3 items-start">
                   <div className="mt-1.5 w-2 h-2 rounded-full bg-red-500 shrink-0" />
-                  <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>{item}</span>
+                  <span className={`text-sm leading-relaxed ${isLight ? 'text-zinc-900 font-medium' : 'text-zinc-200'}`}>{item}</span>
                 </li>
               ))}
             </ul>

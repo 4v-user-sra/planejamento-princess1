@@ -122,8 +122,8 @@ export function MoodboardSlide({ data }: SlideProps) {
             <div className="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm flex flex-col gap-6">
               <div>
                 <div className="text-sm text-zinc-400 mb-1">Principal</div>
-                <div className="text-4xl font-bold text-zinc-900">{tipografia_principal}</div>
-                <div className="text-2xl font-bold text-zinc-900">Aa Bb Cc</div>
+                <div className="text-5xl font-normal text-zinc-900" style={{ fontFamily: "'Brittany Signature', cursive" }}>{tipografia_principal}</div>
+                <div className="text-3xl font-normal text-zinc-700" style={{ fontFamily: "'Brittany Signature', cursive" }}>Brittany Signature</div>
               </div>
               <div className="w-full h-px bg-zinc-100" />
               <div>

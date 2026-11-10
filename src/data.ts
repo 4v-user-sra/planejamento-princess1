@@ -62,7 +62,7 @@ export const presentationData = {
       "slide_type": "diagnostic_analysis",
       "content_slots": {
         "titulo_slide": "Análise da Vitrine Social (Instagram @princesshousesp)",
-        "imagem_url": "https://i.imgur.com/jOgDAGS.jpeg",
+        "imagem_url": "https://i.imgur.com/Ga6UcFW.png",
         "image_placeholder": "Print do Instagram Princess House",
         "insights_estruturados": [
           {
@@ -189,13 +189,13 @@ export const presentationData = {
         "image_placeholder": "Inteligência Competitiva - Pink Party Brasil",
         "insights_estruturados": [
           {
-            "titulo": "Arquitetura de Portfólio por Ciclo Etário (O que Replicar)",
-            "texto": "Pioneira absoluta no nicho com mais de uma década de mercado, mais de 90 mil celebrações e duas unidades fixas (Santana e Tatuapé na Rua Platina). A divisão clara dos pacotes por fases de desenvolvimento — Princesas (4 a 7 anos), Divas (7 a 10 anos) e Teen (10 a 14 anos) — simplifica a navegação no site e acelera a decisão das mães, que identificam de imediato o momento exato da filha.",
+            "titulo": "Segmentação por Faixa Etária no Site (O que Podemos Copiar)",
+            "texto": "Eles dividem o portfólio de forma bem didática por fases de idade — Princesas (4 a 7), Divas (7 a 10) e Teen (10 a 14). Hoje a gente ainda apresenta nossos pacotes muito focados no espaço físico (Prime, VIP, Studio), sem essa clareza imediata de idade. Adotar essa mesma segmentação etária facilita a decisão da mãe na hora da cotação e agiliza o atendimento comercial.",
             "tipo": "positivo"
           },
           {
-            "titulo": "Elementos Cênicos de Engajamento Coletivo (Ponto de Inspiração)",
-            "texto": "A famosa 'banheira da amizade' coletiva com espuma funciona como o ponto alto do evento: um ícone cenográfico pensado para fotos e vídeos que as próprias famílias e convidadas compartilham no Instagram (@pinkpartybrasil). Esse tipo de ritual compartilhado gera um efeito de rede poderoso entre colegas da mesma escola.",
+            "titulo": "Momento Cenográfico Fixo para Viralização (Ideia para Adotarmos)",
+            "texto": "Eles exploram a 'banheira da amizade' como um momento cenográfico específico para fotos e vídeos coletivos que as mães inevitavelmente postam nas redes. Na Princess House temos a hidromassagem e a passarela, mas ainda não criamos um nome proprietário ou um momento fixo no roteiro pensado 100% para estimular esse compartilhamento espontâneo de todas as amigas juntas.",
             "tipo": "positivo"
           },
           {
@@ -220,13 +220,13 @@ export const presentationData = {
         "image_placeholder": "Inteligência Competitiva - Madaminha Spa Party Infantil",
         "insights_estruturados": [
           {
-            "titulo": "Narrativa Intencional & Fortalecimento da Autoestima (O que Replicar)",
-            "texto": "Posicionam cada celebração como uma 'festa intencional' guiada pelo lema 'Meninas seguras hoje serão mulheres confiantes amanhã'. O cuidado estético entra como instrumento lúdico de afeto e autovalorização, sem comparações ou pressões precoces. Essa abordagem pedagógica e acolhedora gera uma identificação imediata com famílias contemporâneas.",
+            "titulo": "Narrativa de Autoestima & Cuidado na Copy (O que Podemos Copiar)",
+            "texto": "Eles trabalham forte o discurso de 'festa intencional' e fortalecimento da autoconfiança das meninas, tirando o peso da vaidade superficial. Nós entregamos um acolhimento até mais intimista na prática, mas ainda comunicamos pouco esse lado emocional nos nossos anúncios e posts. É uma linha de copy que podemos modelar para falar diretamente com as mães mais conscientes.",
             "tipo": "positivo"
           },
           {
-            "titulo": "Integração Lúdica de Personagens e Dinâmicas em Grupo (Ponto de Inspiração)",
-            "texto": "A rotina do espaço mistura com naturalidade o banho de espuma coletivo e o camarim com dinâmicas de acolhimento e a participação ao vivo de personagens infantis e princesas. Esse formato teatral inspira a Princess House a explorar ainda mais o protagonismo de personagens exclusivas (como a Princess Liz) e atrações interativas como a Robô Princess durante os rituais.",
+            "titulo": "Dinâmicas com Personagens Integradas ao Spa (Ideia para Adotarmos)",
+            "texto": "Eles amarram as atividades do spa a momentos lúdicos com personagens infantis ao longo de todo o roteiro. Nós já temos diferenciais fortes como a Robô Princess e a mascote Princess Liz, mas ainda oferecemos de forma avulsa ou pontual. Integrar os personagens diretamente nas etapas dos rituais de spa é algo fácil de replicar para enriquecer ainda mais a entrega.",
             "tipo": "positivo"
           },
           {
@@ -251,13 +251,13 @@ export const presentationData = {
         "image_placeholder": "Inteligência Competitiva - Kabanah SPA Moema",
         "insights_estruturados": [
           {
-            "titulo": "Posicionamento Premium & Percepção de Valor (O que Replicar)",
-            "texto": "Localizado na Av. Chibarás em Moema e respaldado por mais de duas décadas de tradição em bem-estar adulto, o Kabanah atrai com naturalidade o topo da pirâmide (classes A e AA). A comunicação visual com iluminação suave, texturas naturais e roupões felpudos valida que pais de alto padrão buscam uma atmosfera refinada e autêntica de spa de luxo.",
+            "titulo": "Estética Visual Limpa de Spa Tradicional (O que Podemos Copiar)",
+            "texto": "Eles usam uma linha visual mais sóbria e clean (iluminação suave, tons neutros e texturas naturais), passando um ar de spa adulto de alto padrão. Nosso visual é bastante rosa e vibrante, o que encanta as crianças, mas podemos testar criativos e materiais comerciais com essa estética mais elegante para atrair mães que buscam uma atmosfera menos caricata.",
             "tipo": "positivo"
           },
           {
-            "titulo": "Rituais de Cuidado & Gastronomia Refinada (Ponto de Inspiração)",
-            "texto": "O pacote 'Festa Super Star' traz um roteiro sensorial impecável: ofurô aromático espumante, escalda-pés com esferas de gel (Orbeez), máscaras faciais com pepino e oficinas de skincare com rolos de pedra de jade, além de atendimento personalizado com finger foods para adultos. É um modelo de sofisticação que inspira a elevação contínua dos nossos rituais.",
+            "titulo": "Oficinas Sensoriais de Fácil Implementação (Ideia para Adotarmos)",
+            "texto": "Eles incluem atividades sensoriais simples de montar — como escalda-pés com bolinhas de gel (Orbeez) e oficina prática de skincare com rolinhos de jade. Isso gera uma percepção de valor altíssima com um custo de insumo muito baixo. É algo que a gente ainda não tem nos pacotes padrão e que podemos adicionar rapidamente para gerar novidade.",
             "tipo": "positivo"
           },
           {

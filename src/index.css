@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Brittany Signature';
+  src: url('/fonts/BrittanySignature.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --font-sans: "Google Sans", system-ui, sans-serif;
   --font-serif: "Libre Baskerville", serif;
+  --font-signature: "Brittany Signature", cursive;
+}
+
+.font-signature {
+  font-family: 'Brittany Signature', cursive;
 }
 
 body {
