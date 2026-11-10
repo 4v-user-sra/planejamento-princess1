@@ -194,8 +194,8 @@ export const presentationData = {
             "tipo": "positivo"
           },
           {
-            "titulo": "Momento Cenográfico Fixo para Viralização (Ideia para Adotarmos)",
-            "texto": "Eles exploram a 'banheira da amizade' como um momento cenográfico específico para fotos e vídeos coletivos que as mães inevitavelmente postam nas redes. Na Princess House temos a hidromassagem e a passarela, mas ainda não criamos um nome proprietário ou um momento fixo no roteiro pensado 100% para estimular esse compartilhamento espontâneo de todas as amigas juntas.",
+            "titulo": "Uso Forte de Autoridade e Prova Social na Entrada (O que Podemos Copiar)",
+            "texto": "Eles colocam os marcos de volume da marca (anos de estrada e milhares de celebrações realizadas) logo na bio e na entrada do site, transmitindo segurança imediata para famílias que estão cotando pela primeira vez. A Princess House já tem quase uma década de história no Tatuapé e milhares de festas entregues com excelência, mas a gente ainda divulga pouco esse peso de autoridade nos anúncios e canais oficiais. Usar esses números de forma ativa é algo rápido de implementar para gerar credibilidade instantânea.",
             "tipo": "positivo"
           },
           {
@@ -489,34 +489,20 @@ export const presentationData = {
       "content_slots": {
         "titulo": "Cronograma & Fases de Implementação (90 Dias)",
         "tipo_planilha": "Planejamento Trimestral",
-        "imagem_url": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
-        "link_planilha": "https://docs.google.com/spreadsheets/d/1Bmqkf-7IFGMZEMWW5Wu-n8E1NoEOe-fkmM17oapbpxU/edit"
+        "imagem_url": "https://i.imgur.com/MIGOLXc.png",
+        "link_planilha": "https://docs.google.com/spreadsheets/d/1VKdGPbwZ2_MDtI6YIUrqdGPYk0fB9Kg-pQUVvOnxlto/edit?gid=652949990#gid=652949990"
       }
     },
     {
       "id": "20_plano_midia",
-      "slide_type": "media_projection",
+      "slide_type": "closing_cta",
       "content_slots": {
-        "titulo": "Projeção de Metas & Retorno sobre Investimento",
-        "orcamento": "R$ 3.000 a R$ 4.000/mês",
-        "cenarios": [
-          {
-            "nome": "Conservador",
-            "pedidos": "~45",
-            "cpa": "R$ 80,00"
-          },
-          {
-            "nome": "Médio - Referência",
-            "pedidos": "~60",
-            "cpa": "R$ 60,00"
-          },
-          {
-            "nome": "Otimista",
-            "pedidos": "~80",
-            "cpa": "R$ 45,00"
-          }
-        ],
-        "alcance_estimado": "Com CPM médio de R$ 16,50 no Meta Ads e Google Ads, o orçamento mensal gera mais de 180 mil impressões, impactando mais de 65 mil mães e decisores únicos com filhos de 4 a 13 anos no Tatuapé, Mooca, Anália Franco e raio de atendimento até 25 km."
+        "titulo": "Muito Obrigado!",
+        "subtitulo": "Princess House Buffet & Spa Infantil",
+        "parceria": "V4 Company | Nunes & Co",
+        "mensagem": "Construindo memórias inesquecíveis, acelerando vendas e estruturando os próximos passos da expansão.",
+        "proximo_passo": "Início do Onboarding Operacional & Setup de Campanhas",
+        "data": "Novembro / 2026 • São Paulo - SP"
       }
     }
   ]

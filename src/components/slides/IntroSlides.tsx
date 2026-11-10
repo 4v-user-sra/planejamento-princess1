@@ -132,7 +132,7 @@ export function DividerSlide({ data }: SlideProps) {
 }
 
 export function ClosingSlide({ data }: SlideProps) {
-  const { titulo_encerramento, texto_cta } = data.content_slots
+  const { titulo_encerramento, titulo, texto_cta } = data.content_slots
   
   return (
     <div className="w-full h-full bg-zinc-950 flex flex-col items-center justify-center relative text-white p-16 overflow-hidden">
@@ -142,7 +142,7 @@ export function ClosingSlide({ data }: SlideProps) {
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-12">
-        <h2 className="text-7xl font-bold text-center tracking-tight">{titulo_encerramento}</h2>
+        <h2 className="text-7xl font-bold text-center tracking-tight">{titulo || titulo_encerramento || "Muito Obrigado!"}</h2>
         
         <div className="flex gap-6 items-center">
            <div className="bg-white p-4 rounded-xl shadow-2xl flex items-center justify-center">

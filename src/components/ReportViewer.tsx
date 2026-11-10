@@ -25,7 +25,7 @@ const themeMap: Record<string, string> = {
   "21_criativos": "bg-zinc-100 text-zinc-900 border-zinc-200",
   "18_drawflow_funil": "bg-zinc-900 text-zinc-100 border-zinc-800",
   "19_cronograma": "bg-white text-zinc-900 border-zinc-200",
-  "20_plano_midia": "bg-zinc-50 text-zinc-900 border-zinc-200"
+  "20_plano_midia": "bg-zinc-950 text-white border-zinc-900"
 }
 
 // Helper to determine section background based on type
@@ -36,6 +36,7 @@ function getSectionTheme(id: string, type: string) {
   if (['moodboard_identity', 'spreadsheet_placeholder'].includes(type)) return 'bg-white text-zinc-900 border-zinc-200'
   if (['process_timeline', 'funnel_flow_diagram', 'visual_drawflow'].includes(type)) return 'bg-black text-zinc-300 border-zinc-900'
   if (['smart_goal_okr'].includes(type)) return 'bg-zinc-900 text-zinc-300 border-zinc-800'
+  if (['closing_cta'].includes(type)) return 'bg-zinc-950 text-white border-zinc-900'
   return 'bg-zinc-950 text-zinc-300 border-zinc-900'
 }
 
@@ -1199,6 +1200,20 @@ const MetaAdsAuditCharts = ({ isLight, d }: { isLight: boolean; d: any }) => {
         </div>
       </div>
     )
+  }
+
+  if (type === 'closing_cta') {
+    return (
+      <div className="flex flex-col items-center justify-center text-center py-24 md:py-36 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute w-[600px] h-[600px] bg-red-600/10 rounded-full blur-3xl pointer-events-none -top-32" />
+
+        {/* Big Thank You Title */}
+        <h2 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-white z-10">
+          {d.titulo || "Muito Obrigado!"}
+        </h2>
+      </div>
+    );
   }
 
   if (type === 'spreadsheet_placeholder') {
